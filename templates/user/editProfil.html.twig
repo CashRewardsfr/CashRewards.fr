@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer votre profil
+{{ app.user.pseudo }}
+{% endblock %}
+
+{% block flexBox %}{% endblock %}
+
+{% block pagetitle %}{% endblock %}
+
+{% block body %}
+
+{% include('user/_userBanner.html.twig') %}
+
+<section class="compte-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header bg-transparent"><h4>Editez les informations de votre profil {{ app.user.pseudo }}</h4></div>
+					<div class="card-body">
+						<div class="row">
+						<div class="col-md-5">
+							{{ include('user/_form.html.twig', {'button_label': 'Enregistrer les Modifications'}) }}
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique des missions - {{ app.user.pseudo }}{% endblock %}
+
+{% block flexBox %}{% endblock %}
+
+{% block body %}
+
+{% include('user/_userBanner.html.twig') %}
+
+<section class="compte-section pt-3 pb-3">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header bg-transparent"><h4>Missions</h4></div>
+					<div class="card-body">
+						<h4>Votre Historique</h4>
+						<div class="table-responsive">
+							{% include('user/_userMissions.html.twig') %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Section missions -->
+{% endblock %}

@@ -1,0 +1,23 @@
+{% for type, messages in app.flashes %}
+	{% for message in messages %}
+		<div class="p-3 flash-alert m-0 alert alert-{{ type }} bg-{{ type }} border-0 font-weight-light rounded-0" role="alert">
+			<button type="button" class="close text-light" data-dismiss="alert" aria-label="Close">X</button>
+			<span class="badge border-light font-weight-bold text-light">
+
+				{% if type == 'danger' %}
+					<i class="fa fa-exclamation-triangle"></i>
+				{% elseif type =='success' %}
+					<i class="fa fa-check"></i>
+				{% elseif type =='warning' %}
+					<i class="fa fa-exclamation-triangle"></i>
+				{% endif %}
+
+			</span>
+
+			<span class="text-light">
+				{{ message|raw }}
+			</span>
+
+		</div>
+	{% endfor %}
+{% endfor %}

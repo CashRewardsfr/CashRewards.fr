@@ -1,0 +1,28 @@
+<div class="table-responsive">
+    <table class="table  mission-historique-table">
+        <tr>
+            <th>Montant</th>
+            <th>Reduction</th>
+            <th>Adresse</th>
+            <th>Virement</th>
+            <th>Statut</th>
+            <th>Date</th>
+            <th>Validée</th>
+        </tr>
+        {% for paiement in userPaiements(app.user) %}
+        <tr>
+            <td><span class="font-weight-bold">{{ paiement.montant ~ currency }}</span></td>
+            <td><span class="badge badge-warning">- {{ paiement.pointReduction }} points</span></td>
+            <td><span class="badge badge-light font-weight-bold">{{ paiement.virementEmail }}</span></td>
+            <td><span class="badge badge-sm badge-{{ paiement.statut ? 'success' : 'info' }}">{{ paiement.virementType }}</span></td>
+            <td><span class="badge badge-sm badge-{{ paiement.statut ? 'success' : 'info' }}">{{ paiement.statut ? 'Valider' : 'En attente' }}</span></td>
+            <td><span class="badge">{{ paiement.created ? paiement.created|date('d/m/Y') : '' }}</span></td>
+            <td class="text-{{ paiement.statut ? 'success' : 'info' }}"><span class="badge">{{ paiement.statut == 1 ? paiement.updated|date('d/m/Y') : 'En attente' }}</span></td>
+        </tr>
+        {% else %}
+        <tr>
+             <td colspan="7">Aucune demande de paiement pour l'instant</td> 
+         </tr>
+         {% endfor %}
+ </table>
+</div>

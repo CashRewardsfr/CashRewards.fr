@@ -1,0 +1,29 @@
+<!-- START TESTIMONIAL -->
+<section class="testimonial-area bg-light pt-1 pb-1">
+	<div class="container-fluid">						
+		<div class="row">								
+			<div class="col-lg-12 col-sm-12 col-xs-12">
+				<div id="testimonial-slider" class="owl-carousel">
+
+					{% for mission in missionsListe() %}
+					<div class="single_testimonial rounded border">
+						<div class="testi_img">
+							{% if userAvatar(mission.user) %}
+								<img src="{{ vich_uploader_asset(userAvatar(mission.user)) | imagine_filter('small_avatar') }}" class="rounded" alt="{{ mission.user.pseudo }}"/>
+							{% else %}
+								<span class="user-name-truncate bg-light">{{ mission.user.pseudo|u.truncate(1) }}</span>
+							{% endif %}										
+						</div>
+						<div class="test_content">	
+							<span class="p-0 m-0 text-uppercase badge">{{ mission.user.pseudo }}</span>
+							<strong class="d-block m-0 p-0 badge text-left">{{ mission.amount }}</strong>
+						</div>
+					</div>
+					{% endfor %}
+
+				</div>  
+			</div><!-- END COL -->		  
+		</div><!--- END ROW -->
+	</div><!--- END CONTAINER -->
+</section>
+		<!-- END TESTIMONIAL -->

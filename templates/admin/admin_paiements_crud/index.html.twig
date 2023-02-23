@@ -1,0 +1,84 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Demandes de paiements{% endblock %}
+
+{% block colclass %}col-md-12{% endblock %}
+
+{% block pagetitle %}
+<div class="form-head mb-sm-5 mb-3 d-flex flex-wrap align-items-center">
+    <h2 class="font-w600 title mb-2 mr-auto ">Demandes de paiements</h2>
+</div>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-transparent">
+                <h4>Demandes de paiements</h4>
+                <span class="badge badge-outline-success">Total demandes: {{ paiements.getTotalItemCount }}</span>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table shadow-hover display mb-4 dataTablesCard short-one card-table text-black w-100">
+                        <thead>
+                            <tr>
+                                <th><small class="text-black font-weight-bold">#Id</small></th>
+                                <th><small class="text-black font-weight-bold">Montant</small></th>
+                                <th><small class="text-black font-weight-bold">Adresse de virement</small></th>
+                                <th><small class="text-black font-weight-bold">Type de virement</small></th>
+                                <th><small class="text-black font-weight-bold">Statut</small></th>
+                                <th><small class="text-black font-weight-bold">Date</small></th>
+                                <th><small class="text-black font-weight-bold">Date validation</small></th>
+                                <th class="text-right text-black font-weight-bold"><small class="font-w600">Actions</small></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for paiement in paiements %}
+                            <tr>
+                                <td>{{ paiement.id }}</td>
+                                <td><span class="font-weight-bold">{{ paiement.montant ~ currency }}</span></td>
+                                <td><span class="badge badge-light font-weight-bold">{{ paiement.virementEmail }}</span></td>
+                                <td><span class="badge badge-sm badge-outline-{{ paiement.statut ? 'success' : 'primary' }}">{{ paiement.virementType }}</span></td>
+                                <td><span class="badge badge-sm badge-outline-{{ paiement.statut ? 'success' : 'info' }}">{{ paiement.statut ? 'Valider' : 'En attente' }}</span></td>
+                                <td>{{ paiement.created ? paiement.created|date('d/m/Y') : '' }}</td>
+                                <td class="text-{{ paiement.statut ? 'success' : 'info' }}">{{ paiement.statut == 1 ? paiement.updated|date('d/m/Y à H:i') : 'En attente' }}</td>
+                                <td class="text-right">
+                                    {% if paiement.statut %}
+
+                                    {% else %}
+
+                                    {{ include('admin/admin_paiements_crud/_validate_form.html.twig') }}
+
+                                    {% endif %}
+
+                                    <a href="{{ path('app_admin_paiements_crud_show', {'id': paiement.id}) }}" class="btn btn-secondary">Detail</a>
+
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="8">Aucun paiement n'a été trouvé...</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tr>
+                            <th><small class="text-black font-weight-bold">#Id</small></th>
+                            <th><small class="text-black font-weight-bold">Montant</small></th>
+                            <th><small class="text-black font-weight-bold">Adresse de virement</small></th>
+                            <th><small class="text-black font-weight-bold">Type de virement</small></th>
+                            <th><small class="text-black font-weight-bold">Statut</small></th>
+                            <th><small class="text-black font-weight-bold">Date</small></th>
+                            <th><small class="text-black font-weight-bold">Date validation</small></th>
+                            <th class="text-right text-black font-weight-bold"><small class="font-w600">Actions</small></th>
+                        </tr>
+                        <tr>
+                            <td colspan="8">{{ knp_pagination_render(paiements) }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

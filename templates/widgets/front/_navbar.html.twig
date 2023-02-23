@@ -1,0 +1,97 @@
+<div class="header_top {{ app.user ? 'costom-shadow' : '' }}">
+	<div class="container-fluid">
+		<nav class="navbar navbar-expand-md bg-white navbar-light sticky-top">
+			<!-- Brand -->
+			<a href="{{ path('app_home') }}" class="navbar-brand logo pt-3" style="font-size: 1.5rem;">
+				<i class="fa fa-hand-holding-usd"></i> <span style="color: #7dcea0;">Cash</span><span style="color: #3498db;">Rewards.fr </span>
+			</a>
+
+			<!-- Toggler/collapsibe Button -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<!-- Navbar links -->
+			<div class="collapse navbar-collapse" id="collapsibleNavbar">
+				<ul class="navbar-nav ml-auto">
+					{% if app.user %}
+						<li class="nav-item">
+							<a href="{{ path('app_home') }}" class="nav-link"><i class="fa fa-home"></i> Accueil</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link text-sencondary dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> <i class="fa fa-id-card"></i>
+								Gagner de l'argent
+							</a>
+							<div class="dropdown-menu costom-shadow border-0">
+								<a class="dropdown-item" href="{{ path('app_offers_offertoro') }}">Offertoro</a>
+								<a class="dropdown-item" href="{{ path('app_offers_ayet') }}">Ayet</a>
+								<a class="dropdown-item" href="{{ path('app_offers_lootably') }}">Lootably</a>
+								<a class="dropdown-item" href="{{ path('app_offers_adgem') }}">Adgem</a>
+								<a class="dropdown-item" href="{{ path('app_offers_monlix') }}">Monlix</a>
+								<a class="dropdown-item" href="{{ path('app_offers_bitlabs') }}">Bitlabs</a>
+								<a class="dropdown-item" href="{{ path('app_offers_lootv') }}">lootv</a>
+								<a class="dropdown-item" href="{{ path('app_offers_adgate') }}">Adgate</a>
+								<a class="dropdown-item" href="{{ path('app_parrainage_link') }}">Parrainage</a>
+							</div>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link text-sencondary dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> <i class="fa fa-info"></i>
+								Informations
+							</a>
+							<div class="dropdown-menu costom-shadow border-0">
+								<a class="dropdown-item" href="{{ path('app_user_classements') }}">Classement</a>
+								<a class="dropdown-item" href="https://discord.gg/FD2g2wZ66k" target='_blank'>Contact</a>
+							</div>
+						</li>
+						<li class="nav-item">
+							<a href="{{ path('app_user_demande_paiement') }}" class="nav-link"><i class="fa fa-cart-plus"></i> Boutique</a>
+						</li>
+
+						<li class="nav-item dropdown dropcenter">
+							<a class="nav-link green-color" href="#" id="navbardrop" data-toggle="dropdown">
+
+								{% if userAvatar(app.user) %}
+									<img src="{{ vich_uploader_asset(userAvatar(app.user)) | imagine_filter('small_avatar') }}" class="rounded-circle border" alt="{{ app.user.pseudo }}" width="30" height="30"/>
+								{% else %}
+									<img src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}" width="30" height="30" class="rounded-circle border">
+								{% endif %}
+
+								<strong class="user pb-4">{{ app.user.pseudo }}</strong>
+							</a>
+							<div class="dropdown-menu costom-shadow border-0">
+								<a class="dropdown-item">{{ app.user.pseudo }}</a>
+								<div class="dropdown-divider"></div> 
+								<a class="dropdown-item" href="{{ path('app_user_dashboard') }}">Tableau de bord</a>
+								<a class="dropdown-item" href="{{ path('app_user_missions') }}">Missions</a>
+								<a class="dropdown-item" href="{{ path('app_user_affiliers') }}">Affiliers</a>
+								<a class="dropdown-item" href="{{ path('app_user_paiements') }}">Paiements</a>
+								{% if app.user.points >= 5000 %}
+								<a class="dropdown-item" href="{{ path('app_user_demande_paiement') }}">Demander un paiement</a>
+								{% endif %}
+								<a class="dropdown-item" href="{{ path('app_user_profil') }}">Profil</a>
+								<a class="dropdown-item" href="{{ path('app_user_edit_profil') }}">Edition du profil</a>
+								<a class="dropdown-item" href="{{ path('app_user_reset_password') }}">Mot de passe</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item text-danger" href="{{ path('app_disconnect') }}"><i class="fa fa-power-off text-danger"></i>Déconnexion</a>
+							</div>
+						</li>
+
+						<li class="nav-item">
+							<span class="nav-link"><span class="point badge green-bg" id="navbarpoints">{{ app.user.points ? app.user.points : 0 }}&nbsp;<i class="fa fa-money-bill-wave"></i></span></span>
+						</li>
+					{% else %}
+						<li class="nav-item mr-3">
+							<a href="{{ path('app_login') }}" class="btn btn-outline-secondary"><i class="fa fa-user small"></i> S'identifier</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{ path('app_register') }}" class="btn btn-outline-secondary"><i class="fa fa-key small"></i> S'inscrire</a>
+						</li>
+					{% endif %}  
+				</ul>
+			</div>
+		</nav>
+	</div>
+</div>
+<script>
+	document.querySelector('#navbarpoints').innerHTML = new Intl.NumberFormat('en-US').format(document.querySelector('#navbarpoints').innerHTML.match(/[0-9,]*/)[0]) + '&nbsp;<i class="fa fa-money-bill-wave"></i>';
+</script>

@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_admin_missions_crud_delete', {'id': mission.id}) }}" onsubmit="return confirm('Etes-vous sûre de bien vouloir supprimer cette mission?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ mission.id) }}">
+    <button class="btn btn-outline-danger"><i class="fa fa-trash"></i> Supprimer</button>
+</form>

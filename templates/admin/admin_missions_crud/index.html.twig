@@ -1,0 +1,74 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Missions{% endblock %}
+
+{% block colclass %}col-md-12{% endblock %}
+
+{% block pagetitle %}
+<div class="form-head mb-sm-5 mb-3 d-flex flex-wrap align-items-center">
+    <h2 class="font-w600 title mb-2 mr-auto ">Missions</h2>
+</div>
+{% endblock %}
+
+{% block body %}
+<div class="card">
+    <div class="card-header">
+        <h4>Missions</h4>
+        <span class="badge badge-outline-success float-lg-right">Total missions: {{ missions.getTotalItemCount }}</span>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table shadow-hover display mb-4 dataTablesCard short-one card-table text-black w-100">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Description</th>
+                        <th>Gagnant</th>
+                        <th>Gain</th>
+                        <th>Id Offres</th>
+                        <th>Id Transaction</th>
+                        <th>Statut</th>
+                        <th>Date</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mission in missions %}
+                    <tr>
+                        <td>{{ mission.id }}</td>
+                        <td>{{ mission.description }}</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                {% if mission.user.avatar %}
+                                <img src="{{ vich_uploader_asset(mission.user) | imagine_filter('small_avatar') }}" class="rounded-circle mr-2"  width="60" height="60" alt="{{ mission.user.pseudo }}"/>
+                                {% else %}
+                                <img src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}" class="rounded-circle mr-2">
+                                {% endif %}
+                                <span>{{ mission.user.pseudo }}</span>
+                            </div>
+                        </td>
+                        <td><span class="font-weight-bold text-secondary">{{ mission.amount|number_format(2, ',', ' ') }} Points</span></td>
+                        <td>{{ mission.offerId }}</td>
+                        <td><span class="badge dadge-light">{{ mission.transactionId }}</span></td>
+                        <td><span class="badge badge-sm badge-outline-{{ mission.statut ? 'success' : 'danger' }}">{{ mission.statut ? 'Terminer' : 'Annuler' }}</span></td>
+                        <td>{{ mission.created ? mission.created|date('d/m/Y') : '' }}</td>
+                        <td>
+                            {% if is_granted('ROLE_ADMIN') %}
+                            {% include('admin/admin_missions_crud/_delete_form.html.twig') %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="9">Aucune mission...</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="9">{{ knp_pagination_render(missions) }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

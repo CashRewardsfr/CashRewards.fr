@@ -1,0 +1,52 @@
+{% extends 'auth.html.twig' %}
+
+{% block title %}Crée votre compte{% endblock %}
+
+{% block textBloc %}
+<div class="bloc-text">
+    <h1 class="green-color h2 wow fadeInRight" data-wow-duration="3s" data-wow-delay="0.3s" data-wow-offset="0">
+        Crée votre compte
+    </h1>
+    <p class=" wow fadeInLeft" data-wow-duration="6s" data-wow-delay="0.6s" data-wow-offset="0">
+        Inscrivez-vous maintenant pour gagner de l'argent facilement. <br>
+        Lorsque que vous serez inscrits des missions seront mises à votre dispositions
+    </p>
+    <img src="{{ asset('themes/front/assets/img/auth.svg') }}" class="img-fluid">
+</div>
+{% endblock %}
+
+{% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+    {{ form_start(registrationForm, {'attr': {'class': 'auth-form mt-3'}}) }}
+        <div class="text-center justify-content-center">
+            <span class="d-block green-bg icon rounded-circle">
+                <i class="fa fa-user"></i>
+            </span>
+        </div>
+        {{ form_row(registrationForm.pseudo) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.paypal) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+
+        <p class="pt-2 pb-2">
+            En cliquant sur s'inscrire vous acceptez nos <a href="">Termes</a> et 
+            <a href="">Conditions d'utilisation</a> des données.
+        </p>
+        <button type="submit" class="btn btn-home-border btn-lg btn-block text-center">
+            <i class="fa fa-user"></i>
+        S'inscrire</button>
+
+        <p class="text-center pt-3">
+            Vous avez un compte ?
+            <a href="{{ path('app_login') }}">S'identifier</a>
+            <br>
+        </p>
+    {{ form_end(registrationForm) }}
+    <button class="btn btn-home-border btn-lg btn-block text-center" style="margin-bottom:20px;" onclick="document.location.pathname = '/connect/google'"><i class="fa fa-key"></i> S'inscrire avec Google</button>
+
+{% endblock %}

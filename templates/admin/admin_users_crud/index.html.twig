@@ -1,0 +1,138 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Utilisateurs inscrits{% endblock %}
+
+{% block colclass %}col-md-12{% endblock %}
+
+{% block pagetitle %}
+<div class="form-head mb-sm-5 mb-3 d-flex flex-wrap align-items-center">
+	<h2 class="font-w600 title mb-2 mr-auto ">Utilisateurs</h2>
+	<a href="{{ path('app_admin_users_crud_new') }}" class="btn btn-primary mb-2"><i class="fa fa-user-plus"></i> Nouvel utilisateur</a>
+</div>
+{% endblock %}
+
+{% block body %}
+
+<div class="card">
+	<div class="card-header">
+		<span class="badge badge-outline-success">Total utilisateur: {{ users.getTotalItemCount }}</span>
+	</div>
+	<div class="card-body p-0">
+		<div class="table-responsive">
+			<table class="table shadow-hover display mb-4 dataTablesCard short-one card-table text-black w-100 style-1 mb-4" id="ListDatatableView">
+				<thead>
+					<tr>
+						{# sorting of properties based on query components #}
+						<th>{{ knp_pagination_sortable(users, 'Id', 'u.id') }}</th>
+						<th{% if users.isSorted('u.pseudo') %} class="sorted"{% endif %}>
+							{{ knp_pagination_sortable(users, 'UTILISATEUR', 'u.pseudo') }}
+						</th>
+						<th>ROLES</th>
+						<th>POINTS</th>
+						<th>AFFILIERS</th>
+						<th{% if users.isSorted(['u.created', 'u.created']) %} class="sorted"{% endif %}>
+							{{ knp_pagination_sortable(users, 'INSCRIT LE', ['u.created', 'u.created']) }}
+						</th>
+						<th{% if users.isSorted('u.siVerified') %} class="sorted"{% endif %}>
+							{{ knp_pagination_sortable(users, 'COMPTE', 'u.isVerified') }}
+						</th>
+						<th>ACTION</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for user in users %}
+					
+					<tr {% if loop.index is odd %}class="text-danger"{% endif %}>
+						<td>
+							<h6>{{ user.id }}.</h6>
+						</td>
+						<td>
+							<div class="media style-1">
+								{% if userAvatar(user) %}
+		                        <img src="{{ vich_uploader_asset(userAvatar(user)) | imagine_filter('medium_avatar') }}" class="rounded-circle mr-2" alt="{{ user.pseudo }}"/>
+		                        {% else %}
+		                        <span class="shadow text-uppercase text-light bg-primary d-block font-weight-bold rounded-circle mr-3 text-center" style="width: 40px;height:40px;line-height:40px;border-radius:50%;font-size:1.2rem;">
+									{{ user.pseudo|u.truncate(1) }}
+
+		                        {% endif %}
+								
+								</span>
+								<div class="media-body">
+									<h6>{{ user.pseudo }}</h6>
+									<a href="mailto:{{ user.email }}" class="text-dark">{{ user.email }}</a>
+								</div>
+							</div>
+						</td>
+						<td>
+							{% for role in user.roles %}
+
+								{% if role == 'ROLE_ADMIN' %}
+									<span class="badge badge-sm badge-outline-success">
+										Administrateur
+									</span>
+								{% elseif role == "ROLE_USER" %}
+									<span class="badge badge-sm badge-outline-success">
+										Utilisateur
+									</span>
+								{% endif %}
+
+							{% endfor %}
+						</td>
+						<td class="text-center">
+							<span class="badge badge-sm badge-outline-primary font-weight-bold">{{ user.points ? user.points : 0 }} point{{ user.points > 0 ? 's' : '' }}</span>
+						</td>
+						<td class="text-left">
+							<span class="badge badge-sm badge-outline-dark">{{ user.affiliers|length > 0 ? user.affiliers|length : 'Aucun' }} Affilier{{ user.affiliers|length > 1 ? 's' : '' }}</span>
+						</td>
+						<td>
+							<div>
+								<span class="text-dark">{{ user.created|date('d/m/Y') }}</span>
+
+							</div>
+						</td>
+						<td>
+							<span class="badge badge-sm badge-outline-{{ user.isVerified == 1 ? "success" : "danger" }}">{{ user.isVerified == 1 ? "Actif" : "Bloqué" }}</span>
+						</td>
+						<td>
+							<div class="d-flex action-button justify-content-center">
+								<a href="{{ path('app_admin_users_crud_edit', {'id': user.id}) }}" class="btn btn-info btn-xs light px-2">
+									<i class="fa fa-edit"></i>
+								</a>
+								<a href="{{ path('app_admin_users_crud_show', {'id': user.id}) }}" class="ml-2 btn btn-xs px-2 light btn-danger">
+									<i class="fa fa-eye"></i>
+								</a>
+							</div>
+						</td>
+					</tr>
+
+					
+					{% endfor %}
+				</tbody>
+				<tfoot>
+					<tr>
+						{# sorting of properties based on query components #}
+						<th>{{ knp_pagination_sortable(users, 'Id', 'u.id') }}</th>
+						<th{% if users.isSorted('u.pseudo') %} class="sorted"{% endif %}>
+							{{ knp_pagination_sortable(users, 'UTILISATEUR', 'u.pseudo') }}
+						</th>
+						<th>ROLES</th>
+						<th>POINTS</th>
+						<th>AFFILIERS</th>
+						<th{% if users.isSorted(['u.created', 'u.created']) %} class="sorted"{% endif %}>
+							{{ knp_pagination_sortable(users, 'INSCRIT LE', ['u.created', 'u.created']) }}
+						</th>
+						<th{% if users.isSorted('u.siVerified') %} class="sorted"{% endif %}>
+							{{ knp_pagination_sortable(users, 'COMPTE', 'u.isVerified') }}
+						</th>
+						<th>ACTION</th>
+					</tr>
+				</tfoot>
+			</table>
+
+			{{ knp_pagination_render(users) }}
+
+		</div>
+	</div>
+</div>
+
+{% endblock %}

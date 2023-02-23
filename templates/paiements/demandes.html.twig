@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demander un paiement - {{ app.user.pseudo }}{% endblock %}
+
+{% block flexBox %}{% endblock %}
+
+{% block body %}
+
+{% include('user/_userBanner.html.twig') %}
+
+<!-- Section missions -->
+<section class="compte-section paiement-section pt-2 pb-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="bloc-text">
+                    <h2 class="">
+                        Demandez un Paiement
+                    </h2>
+                    <p class="font-weight-light">
+                        Chaque mission vous fait gagner des points qui peuvent être échangés contre de l'argent ou des bons d'achat !
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-5">
+                    <div class="card-body">
+                        <i class="fa fa-exclamation-triangle mt-2 mr-3 text-danger"></i> <span class="font-weight-light">1000 points = 1$</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if app.user.points < 5000 %}
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-5">
+                    <div class="card-body">
+                        <p class="text-danger lead">Vous devez avoir au minimum 5000 points pour demander un paiement!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}  
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header text-center bg-transparent">
+                        <img src="{{ asset('img/paypal.jpg') }}">
+                        <h2 class="green-color text-center p-3">Virement Paypal</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-warning font-weight-light pb-2"><i class="fa fa-exclamation-triangle"></i> L'email sera utilisée pour le versement</div>
+                        {{ form_start(paypalform) }}
+                        {{ form_widget(paypalform) }}
+                        <div class="form-group">
+                            <button class="btn btn-home-border" formnovalidate><i class="fa fa-credit-card"></i> {{ button_label|default('Demander maintenant') }}</button>
+                            {{ form_end(paypalform) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header text-center bg-transparent">
+                        <img src="{{ asset('img/Litecoin.jpg') }}">
+                        <h2 class="green-color text-center p-3">Virement Litecoin (2$ de frais)</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-warning font-weight-light pb-2"><i class="fa fa-exclamation-triangle"></i> L'adresse sera utilisé pour le versement</div>
+                        {{ form_start(litecoinform) }}
+                        {{ form_widget(litecoinform) }}
+                        <div class="form-group">
+                            <button class="btn btn-home-border" formnovalidate><i class="fa fa-credit-card"></i> {{ button_label|default('Demander maintenant') }}</button>
+                            {{ form_end(litecoinform) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header text-center bg-transparent">
+                        <img src="{{ asset('img/bitcoin.jpg') }}">
+                        <h2 class="green-color text-center p-3">Virement Bitcoin (2$ de frais)</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-warning font-weight-light pb-2"><i class="fa fa-exclamation-triangle"></i> L'adresse sera utilisé pour le versement</div>
+                        {{ form_start(bitcoinform) }}
+                        {{ form_widget(bitcoinform) }}
+                        <div class="form-group">
+                            <button class="btn btn-home-border" formnovalidate><i class="fa fa-credit-card"></i> {{ button_label|default('Demander maintenant') }}</button>
+                            {{ form_end(bitcoinform) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header text-center bg-transparent">
+                        <img src="{{ asset('img/amazon.jpg') }}">
+                        <h2 class="green-color text-center p-3">Carte Amazon</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-warning font-weight-light pb-2"><i class="fa fa-exclamation-triangle"></i> L'adresse sera utilisé pour l'envoie</div>
+                        {{ form_start(amazonform) }}
+                        {{ form_widget(amazonform) }}
+                        <div class="form-group">
+                            <button class="btn btn-home-border" formnovalidate><i class="fa fa-credit-card"></i> {{ button_label|default('Demander maintenant') }}</button>
+                            {{ form_end(amazonform) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

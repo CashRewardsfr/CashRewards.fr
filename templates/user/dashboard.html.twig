@@ -1,0 +1,201 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre tableau de bord - {{ app.user.pseudo }}{% endblock %}
+
+{% block flexBox %}{% endblock %}
+
+{% block body %}
+
+{% include('user/_userBanner.html.twig') %}
+
+<!-- Statistique section -->
+<section class="sataistique-area-section compte-section">
+	<div class="container">
+		<h1 class="h4 pb-3 pt-3 text-center font-weight-bold">Tableau de bord ({{ app.user.pseudo }})</h1>
+		<div class="row">
+			<div class="col-6 p-1 col-md-4 d-flex align-content-stretch">
+				<div class="card w-100">
+					<div class="card-body">
+						<div class="stat-box media no-shadow p-2">
+							<span class="icon">
+								<i class="fa fa-users"></i>
+							</span>
+							<div class="media-body no-shadow">
+								<span class="green-color">Utilisateurs connectés</span>
+								<h4>{{ usersConneted()|length }}</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-6 p-1 col-md-4 d-flex align-content-stretch">
+				<div class="card w-100">
+					<div class="card-body">
+						<div class="stat-box media no-shadow p-2">
+							<span class="icon">
+								<i class="fa fa-money-bill-alt"></i>
+							</span>
+							<div class="media-body no-shadow">
+								<span class="green-color">Points en circulation</span>
+								<h4>{{ pointsEnCirculation }}</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-6 p-1 col-md-4 d-flex align-content-stretch">
+				<div class="card w-100">
+					<div class="card-body">
+						<div class="stat-box media no-shadow p-2">
+							<span class="icon">
+								<i class="fa fa-money-bill-alt"></i>
+							</span>
+							<div class="media-body no-shadow">
+								<span class="green-color">{{ mission ? mission.description : '' }}</span>
+								<h4>{{ mission ? mission.amount : '' }}</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End statistique section -->
+
+<!-- Mission section -->
+<section class="mt-4 compte-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-6 p-1">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="green-color">Site de Sondage</h4>
+						<a href="{{ path('app_offers_bitlabs') }}" class="d-block h-25"><img src="{{ asset('img/bitlabs.png') }}" class="h-25 w-50"></a>
+					</div>
+				</div>
+			</div>
+			<div class="col-6 p-1">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="green-color">Regarde des vidéos</h4>
+						<a href="{{ path('app_offers_lootv') }}" class="d-block h-25"><img src="{{ asset('img/loottv.png') }}" class="h-25 w-50"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Mission section -->
+
+<!-- Section missions -->
+<section class="mission-type pt-4 compte-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-6 col-md-2 mx-auto p-1">
+				<div class="card mb-3 semi-dark-bg text-center costom-shadow">
+					<!--<div class="card-header border-0 bg-transparent">
+						<span class="float-left color-green">New</span>
+						<span class="font-weight-bold float-right badge dark-gb green-color costom-shadow">+5000</span>
+					</div>-->
+					<div class="card-body p-1">
+						<a href="{{ path('app_offers_offertoro') }}"> <img src="{{ asset('img/offertoro.png') }}" class="img"></a>
+						<h2 class="p-3 text-center h5">OfferToro</h2>
+						<a href="{{ path('app_offers_offertoro') }}" class="btn btn-sm btn-dark rounded-0">Commencer</a>
+					</div>
+					<div class="card-footer border-0 bg-transparent pt-4 pb-4">
+						<a href="https://www.offertoro.com" target="_blanck" class="">En savoir plus</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-6 col-md-2 mx-auto p-1">
+				<div class="card semi-dark-bg mb-3 bg-transparent text-center costom-shadow">
+					<!--<div class="card-header border-0 bg-transparent">
+						<span class="float-left color-green">New</span>
+						<span class="font-weight-bold float-right badge dark-gb green-color costom-shadow">+5000</span>
+					</div>-->
+					<div class="card-body p-1">
+						<a href="{{ path('app_offers_ayet') }}"> <img src="{{ asset('img/ayet.jpg') }}" class="img"> </a>
+						<h2 class="p-3 text-center h5">AyetStudio</h2>
+						<a href="{{ path('app_offers_ayet') }}" class="btn btn-sm btn-dark rounded-0">Commencer</a>
+					</div>
+					<div class="card-footer border-0 bg-transparent pt-4 pb-4">
+						<a href="https://www.ayetstudios.com" target="_blanck" class="">En savoir plus</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-6 col-md-2 mx-auto p-1">
+				<div class="card semi-dark-bg mb-3 bg-transparent text-center costom-shadow">
+					<!--<div class="card-header border-0 bg-transparent">
+						<span class="float-left color-green">New</span>
+						<span class="font-weight-bold float-right badge dark-gb green-color costom-shadow">+5000</span>
+					</div>-->
+					<div class="card-body p-1">
+						<a href="{{ path('app_offers_lootably') }}"> <img src="{{ asset('img/loot.png') }}" class="img"> </a>
+						<h2 class="p-3 text-center h5">Lootably</h2>
+						<a href="{{ path('app_offers_lootably') }}" class="btn btn-sm btn-dark rounded-0">Commencer</a>
+					</div>
+					<div class="card-footer border-0 bg-transparent pt-4 pb-4">
+						<a href="https://wall.lootably.com" target="_blanck" class="">En savoir plus</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-6 col-md-2 mx-auto p-1">
+				<div class="card semi-dark-bg mb-3 bg-transparent text-center costom-shadow">
+					<!--<div class="card-header border-0 bg-transparent">
+						<span class="float-left color-green">New</span>
+						<span class="font-weight-bold float-right badge dark-gb green-color costom-shadow">+5000</span>
+					</div>-->
+					<div class="card-body p-1">
+						<a href="{{ path('app_offers_adgem') }}"><img src="{{ asset('img/adgem.jpg') }}" class="img"></a>
+						<h2 class="p-3 text-center h5">Adgem</h2>
+						<a href="{{ path('app_offers_adgem') }}" class="btn btn-sm btn-dark rounded-0">Commencer</a>
+					</div>
+					<div class="card-footer border-0 bg-transparent pt-4 pb-4">
+						<a href="https://api.adgem.com" target="_blanck" class="">En savoir plus</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-6 col-md-2 mx-auto p-1">
+				<div class="card semi-dark-bg mb-3 bg-transparent text-center costom-shadow">
+					<!--<div class="card-header border-0 bg-transparent">
+						<span class="float-left color-green">New</span>
+						<span class="font-weight-bold float-right badge dark-gb green-color costom-shadow">+5000</span>
+					</div>-->
+					<div class="card-body p-1">
+						<a href="{{ path('app_offers_monlix') }}"><img src="{{ asset('img/monlix.png') }}" class="img"></a>
+						<h2 class="p-3 text-center h5">Monlix</h2>
+						<a href="{{ path('app_offers_monlix') }}" class="btn btn-sm btn-dark">Commencer</a>
+					</div>
+					<div class="card-footer border-0 bg-transparent pt-4 pb-4">
+						<a href="https://offers.monlix.com" target="_blanck" class="">En savoir plus</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-6 col-md-2 mx-auto p-1">
+				<div class="card semi-dark-bg mb-3 bg-transparent text-center costom-shadow">
+					<!--<div class="card-header border-0 bg-transparent">
+						<span class="float-left color-green">New</span>
+						<span class="font-weight-bold float-right badge dark-gb green-color costom-shadow">+5000</span>
+					</div>-->
+					<div class="card-body p-1">
+						<a href="{{ path('app_offers_adgate') }}"><img src="{{ asset('img/adgate.png') }}" class="img"></a>
+						<h2 class="p-3 text-center h5">Adgate</h2>
+						<a href="{{ path('app_offers_adgate') }}" class="btn btn-sm btn-dark">Commencer</a>
+					</div>
+					<div class="card-footer border-0 bg-transparent pt-4 pb-4">
+						<a href="https://adgatemedia.com" target="_blanck" class="">En savoir plus</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 p-1">
+				<a class="card" href="https://www.youtube.com/channel/UCpfPWHdFYRm0vnNUvzIR1Ww/videos" target="_blank">
+					<div class="card-body">
+						<img src="{{ asset('img/hero-img.png') }}" class="img-fluid">
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}

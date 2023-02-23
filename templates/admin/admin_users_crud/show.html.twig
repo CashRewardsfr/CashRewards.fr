@@ -1,0 +1,146 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}{{ user.pseudo }} - compte {% endblock %}
+
+{% block pagetitle %}{% endblock %}
+
+{% block body %}
+
+{% include('admin/admin_users_crud/_userProfilBanner.html.twig') %}
+
+<div class="shadow p-4 bg-white mb-4">
+    <div class=""><h4 class="ml-4">Profil</h4></div>
+    <div class="table-responsive">
+        <table class="table table-borderless shadow-hover mb-4">
+            <tbody>
+                <tr>
+                    <th>#ID</th>
+                    <td>{{ user.id }}</td>
+                </tr>
+                <tr>
+                    <th>Pseudo</th>
+                    <td>{{ user.pseudo }}</td>
+                </tr>
+                <tr>
+                    <th>Paypal</th>
+                    <td>{{ user.paypal }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <th>Roles</th>
+                    <td>
+                        {% for role in user.roles %}
+
+                        {% if role == 'ROLE_ADMIN' %}
+                        <span class="badge badge-sm badge-outline-success">
+                            Administrateur
+                        </span>
+                        {% elseif role == "ROLE_USER" %}
+                        <span class="badge badge-sm badge-outline-success">
+                            Utilisateur
+                        </span>
+                        {% endif %}
+
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Points</th>
+                    <td><span class="badge badge-success">{{ user.points ? user.points : 0 }} point{{ user.points > 0 ? 's' : '' }}</span></td>
+                </tr>
+                <tr>
+                    <th>Mot de passe</th>
+                    <td><strong>***********</strong></td>
+                </tr>
+                <tr>
+                    <th>Statut du compte</th>
+                    <td><span class="badge badge-sm badge-outline-{{ user.isVerified == 1 ? "success" : "danger" }}">{{ user.isVerified == 1 ? "Actif" : "Bloqué" }}</span></td>
+                </tr>
+                <tr>
+                    <th>Inscrit le</th>
+                    <td>{{ user.created ? user.created|date('d/m/Y à H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Mise à jour le</th>
+                    <td>{{ user.updated ? user.updated|date('d/m/Y à H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Action</th>
+                    <td>
+                        <a href="{{ path('app_admin_users_crud_index') }}" class="btn btn-primary"><i class="fa fa-users"></i> Liste des utilisateurs</a>
+
+                        <a href="{{ path('app_admin_users_crud_edit', {'id': user.id}) }}" class="btn btn-secondary"><i class="fa fa-edit"></i> Modifier le compte</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="shadow p-4 bg-white mb-4">
+    <div class=""><h4 class="ml-4">Dernières missions</h4></div>
+    <div class="table-responsive">
+        <table class="table shadow-hover display mb-4 dataTablesCard short-one card-table text-black w-100">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>POINTS GAGNES</th>
+                    <th>DESCRIPTION</th>
+                    <th>OFFRE ID</th>
+                    <th>CREATED</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mission in userMissions(user) %}
+                <tr>
+                    <td>{{ mission.id }}</td>
+                    <td><span class="badge badge-warning">{{ mission.amount }}</span></td>
+                    <td>{{ mission.description }}</td>
+                    <td>{{ mission.offerId }}</td>
+                    <td>{{ mission.created|date('d/m/Y') }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                   <td colspan="5">Aucune missions pour l'instant</td> 
+               </tr>
+               {% endfor %}
+           </tbody>
+       </table>
+   </div>
+   <div class="">
+        <a href="{{ path('app_admin_user_crud_missions', {id: user.id }) }}" class="btn btn-primary">Voir toute les missions</a>
+    </div>
+</div>
+
+<div class="shadow p-4 bg-white mb-4 rounded">
+    <div class="card-header"><h4 class="ml-4">Dernières demandes de paiements</h4></div>
+    <div class="table-responsive p-3">
+        {% include('admin/admin_users_crud/_demandesPaiement.html.twig') %}
+    </div>
+    <div class="card-footer p-4">
+        <a href="{{ path('app_admin_user_crud_paiements', {id: user.id }) }}" class="btn btn-primary">Voir toute les demandes</a>
+    </div>
+</div>
+
+<div class="shadow p-4 bg-white rounded mb-4">
+    <div class="card-header"><h4 class="ml-4">Affiliers</h4></div>
+    <div class="card-body">
+        <div class="row mb-4">
+            {% for affilier in userAffiliers(user) %}
+            <div class="col-sm-3">
+                {% include('user/_affilierBox.html.twig') %}
+            </div>
+            {% else %}
+
+            <p>Aucun affiliers pour l'instant</p>
+            {% endfor %}
+        </div>
+
+        <a href="{{ path('app_admin_user_crud_affiliers', {id: user.id}) }}" class="btn btn-primary">Voir tout les affiliers</a>
+    </div>
+</div>
+
+{% endblock %}

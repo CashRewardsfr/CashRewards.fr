@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Parrainer d'autres utilisateurs{% endblock %}
+
+{% block flexBox %}{% endblock %}
+
+{% block body %}
+
+{% include('user/_userBanner.html.twig') %}
+
+<section class="compte-section"> 
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header bg-transparent"><h4>Votre lien de parrainage</h4></div>
+					<div class="card-body">
+						<span class="text-primary">{{ parrainageLink }}</span>
+						<p class="">Parrainer d'autres utilisateurs en partageant votre lien de parrainage pour gagner plus de bonus!</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Home Welcome section -->
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre Historique des demandes de paiement {{ app.user.pseudo }}{% endblock %}
+
+{% block flexBox %}{% endblock %}
+
+{% block body %}
+
+{% include('user/_userBanner.html.twig') %}
+
+<section class="compte-section pt-3 pb-3">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header bg-transparent">
+						<h4 class="">Demandes de paiements</h4>
+					</div>
+					<div class="card-body">
+						<h4 class="float-md-left">Votre Historique des demandes de paiement {{ app.user.pseudo }}</h4>
+						<a href="{{ path('app_user_demande_paiement') }}" class="float-md-right btn btn-outline-primary btn-sm"><i class="fa fa-cart-plus"></i> Demander un paiement</a>
+						<div class="table-responsive">
+							{% include('user/_demandePaiementTable.html.twig') %}
+						</div>
+					</div>
+					<div class="card-footer bg-transparent">
+						{{ knp_pagination_render(paiements) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Section missions -->
+{% endblock %}

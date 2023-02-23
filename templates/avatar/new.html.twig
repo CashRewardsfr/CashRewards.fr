@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Image de profil
+{{ app.user.pseudo }}
+{% endblock %}
+
+{% block flexBox %}{% endblock %}
+
+{% block pagetitle %}{% endblock %}
+
+{% block body %}
+
+{% include('user/_userBanner.html.twig') %}
+
+<section class="compte-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-transparent"><h4>Choisir une image de profil {{ app.user.pseudo }}</h4></div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-5">
+
+                                {{ include('avatar/_form.html.twig') }}
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

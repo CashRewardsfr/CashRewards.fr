@@ -1,0 +1,51 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}{{ user.pseudo }} - missions {% endblock %}
+
+{% block pagetitle %}{% endblock %}
+
+{% block body %}
+
+{% include('admin/admin_users_crud/_userProfilBanner.html.twig') %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body p-0">
+                <h4 class="p-4">Dernières missions de {{ user.pseudo }}</h4>
+                <div class="table-responsive p-3">
+                    <table class="table shadow-hover display mb-4 dataTablesCard short-one card-table text-black w-100">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>POINTS GAGNES</th>
+                                <th>DESCRIPTION</th>
+                                <th>OFFRE ID</th>
+                                <th>CREATED</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for mission in missions %}
+                            <tr>
+                                <td>{{ mission.id }}</td>
+                                <td><span class="badge badge-warning">{{ mission.amount }}</span></td>
+                                <td>{{ mission.description }}</td>
+                                <td>{{ mission.offerId }}</td>
+                                <td>{{ mission.created|date('d/m/Y') }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                               <td colspan="5">Aucune missions pour l'instant</td> 
+                           </tr>
+                           {% endfor %}
+                       </tbody>
+                   </table>
+               </div>
+               <div>
+               		{{ knp_pagination_render(missions) }}
+               </div>
+           </div>
+       </div>
+   </div>
+</div>                
+{% endblock %}

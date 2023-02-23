@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre profil
+{{ app.user.pseudo }}
+{% endblock %}
+
+{% block flexBox %}{% endblock %}
+
+{% block pagetitle %}{% endblock %}
+
+{% block body %}
+
+{% include('user/_userBanner.html.twig') %}
+
+<section class="compte-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="card mb-4">
+					<div class="card-header bg-transparent"><h4>Introduction</h4></div>
+					<div class="card-body">
+						<table class="table table-borderless text-left">
+							<tbody>
+								<tr>
+									<th>Pseudo</th>
+									<td><strong>{{ app.user.pseudo }}</strong></td>
+								</tr>
+								<tr>
+									<th>Paypal</th>
+									<td><span class="badge badge-light">{{ app.user.paypal }}</span></td>
+								</tr>
+								<tr>
+									<th>Email</th>
+									<td><span class="badge badge-light">{{ app.user.email }}</span></td>
+								</tr>
+								<tr>
+									<th>Points</th>
+									<td><span class="badge badge-success">{{ app.user.points ? app.user.points : 0 }} point{{ app.user.points > 0 ? 's' : '' }}</span></td>
+								</tr>
+								<tr>
+									<th>Mot de passe</th>
+									<td><strong class="mr-3">***********</strong>
+										<a href="{{ path('app_user_reset_password') }}" class="btn btn-sm btn-outline-secondary"><i class="fa fa-lock"></i> Editer</a>
+									</td>
+								</tr>
+								<tr>
+									<th>Statut du compte</th>
+									<td><span class="badge badge-sm badge-{{ app.user.isVerified == 1 ? "success" : "danger" }}">{{ app.user.isVerified == 1 ? "Actif" : "Bloqué" }}</span></td>
+								</tr>
+								<tr>
+									<th>Membre depuis le</th>
+									<td>{{ app.user.created ? app.user.created|date('d/m/Y') : '' }}</td>
+								</tr>
+								<tr>
+									<th>Compte mise à jour le</th>
+									<td>{{ app.user.updated ? app.user.updated|date('d/m/Y') : '' }}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="card-footer bg-transparent text-center"><a href="{{ path('app_user_edit_profil') }}" class="btn btn-outline-primary btn-sm">Mettre à jour votre profil</a></div>
+				</div>
+				<div class="card mb-3">
+					<div class="card-header bg-transparent"><h4>Historique des missions</h4></div>
+					<div class="card-body">
+						<div class="table-responsive">
+							{% include('user/_userMissions.html.twig') %}
+						</div>
+					</div>
+					<div class="card-footer text-center bg-transparent">
+						<a href="{{ path('app_user_missions') }}" class="btn btn-sm btn-outline-secondary">Historique des missions</a>
+					</div>
+				</div>
+				<div class="card mb-3">
+					<div class="card-header bg-transparent"><h4>Historique des demandes de paiments</h4></div>
+					<div class="card-body">
+						<div class="table-responsive">
+							{% include('user/_demandePaiementTable.html.twig') %}
+						</div>
+					</div>
+					<div class="card-footer text-center bg-transparent">
+						<a href="{{ path('app_user_paiements') }}" class="btn btn-sm btn-outline-secondary">Historique des demandes</a>
+						<a href="{{ path('app_user_demande_paiement') }}" class="btn btn-sm btn-outline-primary"><i class="fa fa-cart-plus"></i> Demander un paiement</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="card mb-4">
+					<div class="card-header bg-transparent ">
+						<h4>Affiliers</h4>
+					</div>
+					<div class="card-body">
+						{% for affilier in userAffiliers(app.user) %}
+						{% include('user/_affilierBox.html.twig') %}
+						{% else %}
+						<p>Aucun affilier...</p>
+						{% endfor %}
+						
+						<hr>
+						<a href="{{ path('app_user_affiliers') }}" class="btn btn-outline-secondary btn-sm">Liste de affiliers</a>
+					</div>
+					<div class="card-footer bg-transparent">
+						<small class="font-weight-bold">Votre lien de parrainage</small>
+						<span class="text-primary">{{ parrainageLink }}</span>
+						<p class="small">Parrainer d'autres utilisateurs en partageant votre lien de parrainage pour gagner plus de bonus!</p>
+					</div>
+				</div>
+				<div class="card offerts-card mb-4 bg-light">
+					<div class="card-header bg-transparent ">
+						<h4>Gagner de l'argent</h4>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-6 p-1">
+								<a href="{{ path('app_offers_offertoro') }}">
+									<img src="{{ asset('img/offertoro.png') }}" class="img"> <br>
+									OfferToro
+								</a>
+							</div>
+							<div class="col-6 p-1">
+								<a href="{{ path('app_offers_ayet') }}">
+									<img src="{{ asset('img/ayet.jpg') }}" class="img"><br>
+									AyetStudio
+								</a>
+							</div>
+							<div class="col-6 p-1">
+								<a href="{{ path('app_offers_lootably') }}">
+									<img src="{{ asset('img/loot.png') }}" class="img"><br>
+									<span>Lootably</span>
+								</a>
+							</div>
+							<div class="col-6 p-1">
+								<a href="{{ path('app_offers_adgem') }}">
+									<img src="{{ asset('img/adgem.jpg') }}" class="img"><br>
+								Adgem</a>
+							</div>
+							<div class="col-6 p-1">
+								<a href="{{ path('app_offers_monlix') }}">
+									<img src="{{ asset('img/monlix.png') }}" class="img"><br>
+								Monlix</a>
+							</div>
+							<div class="col-6 p-1">
+								<a href="{{ path('app_offers_bitlabs') }}">
+									<img src="{{ asset('img/bitlabs.png') }}" class="img"><br>
+									Bitlabs
+								</a>
+							</div>
+							<div class="col-6 p-1">
+								<a href="{{ path('app_offers_lootv') }}">
+									<img src="{{ asset('img/loottv.png') }}" class="img"><br>
+									lootv
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}

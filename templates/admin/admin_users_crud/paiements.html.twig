@@ -1,0 +1,67 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}{{ user.pseudo }} - demandes de paiements {% endblock %}
+
+{% block pagetitle %}{% endblock %}
+
+{% block body %}
+
+{% include('admin/admin_users_crud/_userProfilBanner.html.twig') %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body p-0">
+                <h4 class="p-4">Dernières demandes de paiements de {{ user.pseudo }}</h4>
+                <div class="table-responsive p-3">
+                    <div class="table-responsive">
+                        <table class="table  mission-historique-table">
+                            <tr style="border-bottom: 2px solid green!important;">
+                                <th>Montant</th>
+                                <th>Adresse virement</th>
+                                <th>Virement</th>
+                                <th>Statut</th>
+                                <th>Date</th>
+                                <th>Date validation</th>
+                                <th>Actions</th>
+                            </tr>
+                            {% for paiement in userPaiements(user) %}
+                            <tr>
+                                <td><span class="font-weight-bold">{{ paiement.montant ~ currency }}</span></td>
+                                <td><span class="badge badge-light font-weight-bold">{{ paiement.virementEmail }}</span></td>
+                                <td><span class="badge badge-sm badge-{{ paiement.statut ? 'success' : 'info' }}">{{ paiement.virementType }}</span></td>
+                                <td><span class="badge badge-sm badge-{{ paiement.statut ? 'success' : 'info' }}">{{ paiement.statut ? 'Valider' : 'En attente' }}</span></td>
+                                <td><span class="badge">{{ paiement.created ? paiement.created|date('d/m/Y') : '' }}</span></td>
+                                <td class="text-{{ paiement.statut ? 'success' : 'info' }}"><span class="badge">{{ paiement.statut == 1 ? paiement.updated|date('d/m/Y à H:i') : 'En attente' }}</span></td>
+                                <td>
+                                    {% if is_granted('ROLE_ADMIN') %}
+
+                                    {% if paiement.statut %}
+
+                                    {% else %}
+
+                                    {{ include('admin/admin_paiements_crud/_validate_form.html.twig') }}
+
+                                    {% endif %}
+
+                                    <a href="{{ path('app_admin_paiements_crud_show', {'id': paiement.id}) }}" class="btn btn-secondary">Detail</a>
+
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                             <td colspan="5">Aucune demande depaiement pour l'instant</td> 
+                         </tr>
+                         {% endfor %}
+                     </table>
+                 </div>
+             </div>
+             <div>
+                {{ knp_pagination_render(paiements) }}
+           </div>
+       </div>
+   </div>
+</div>
+</div>                
+{% endblock %}

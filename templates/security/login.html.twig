@@ -1,0 +1,64 @@
+{% extends 'auth.html.twig' %}
+
+{% block title %}S'identifier{% endblock %}
+
+{% block textBloc %}
+<div class="bloc-text">
+    <h1 class="green-color h2 wow fadeInRight" data-wow-duration="3s" data-wow-delay="0.3s" data-wow-offset="0">
+        Connexion à votre espace
+    </h1>
+    <p class=" wow fadeInLeft" data-wow-duration="6s" data-wow-delay="0.6s" data-wow-offset="0">
+        Retrouvez votre compte pour accéder à votre Dashboard
+    </p>
+    <img src="{{ asset('themes/front/assets/img/auth.svg') }}" class="img-fluid">
+</div>
+{% endblock %}
+
+{% block body %}
+
+    {% if error %}
+    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+    <div class="mb-3">
+        Vous êtes déja connectez en tant que "<strong>{{ app.user.pseudo }}</strong>", <a href="{{ path('app_logout') }}">Se déconnecter</a>
+    </div>
+    {% endif %}
+    
+    <form method="post" class="auth-form mt-3">
+        <div class="text-center justify-content-center">
+            <span class="d-block green-bg icon rounded-circle">
+                <i class="fa fa-user"></i>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail">Entrer votre e-mail</label>
+            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" placeholder="email@domaine.com" required autofocus>
+        </div>
+        <div class="form-group form-group-sm">
+            <div class="row">
+                <div class="col-md-6"><label for="inputPassword">Mot de passe</label></div>
+                <div class="col-md-6"><a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié!</a></div>
+            </div>
+            
+            <input type="password" name="password" placeholder="*****" id="inputPassword" class="form-control" autocomplete="current-password" required>
+        </div>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        <div class="pb-3 form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" name="_remember_me" type="checkbox">
+                Restez connecté
+            </label>
+        </div>
+        <button type="submit" class="btn btn-home-border btn-lg btn-block text-center"><i class="fa fa-key"></i> S'identifier</button>
+
+        <p class="text-center pt-3">
+            Vous n'avez pas de compte ? <a href="{{ path('app_register') }}">S'inscrire</a> <br>
+        </p>
+    </form>
+    <button class="btn btn-home-border btn-lg btn-block text-center" style="margin-bottom:20px;" onclick="document.location.pathname = '/connect/google'"><i class="fa fa-key"></i> S'identifier avec Google</button>
+
+{% endblock %}

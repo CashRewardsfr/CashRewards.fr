@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Classement{% endblock %}
+
+{% block flexBox %}{% endblock %}
+
+{% block body %}
+
+{% include('user/_userBanner.html.twig') %}
+
+<section class="compte-section"> 
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header bg-transparent"><h4>Classement</h4></div>
+					<div class="card-body">
+						<div class="table-responsive">
+
+							<table class="table table-stripped table-hover table-borderless">
+								{% for key, user in users %}
+									<tr>
+										<td><strong class="p-3 d-block costom-shadow bg-light text-center w-100 rounded">{{ (page - 1) * 10 + (key + 1) }}</strong></td>
+										<td>
+											<div class="media p-2 costom-shadow rounded bg-white">
+
+												{% if user.pseudo == app.user.pseudo %}
+
+													{% if userAvatar(app.user) %}
+														<img src="{{ vich_uploader_asset(userAvatar(app.user)) | imagine_filter('small_avatar') }}" class="rounded-circle img-thumbnail" alt="{{ app.user.pseudo }}" width="50" height="50"/>
+													{% else %}
+														<img src="{{ asset('img/user.jpg') |imagine_filter('small_avatar') }}" width="50" height="50" class="rounded-circle img-thumbnail">
+													{% endif %}
+
+												{% else %}
+
+													{% if user.avatar %}
+														<img src="{{ vich_uploader_asset(userAvatar(user.avatar)) | imagine_filter('small_avatar') }}" class="rounded-circle img-thumbnail" alt="{{ user.pseudo }}"/>
+													{% else %}
+														<img src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}" width="50" height="50" class="rounded-circle img-thumbnail">
+													{% endif %}
+
+												{% endif %}
+
+												<div class="media-body ml-3">
+													<strong class="d-block pt-2">{{ user.pseudo == app.user.pseudo ? 'Vous' : user.pseudo }}</strong>
+												</div>
+											</div>
+										</td>
+										<td class="text-right">
+											<span class="bg-info p-3 d-block rounded text-center w-50 font-weight-bold text-light">{{ user.points ? user.points : 0 }}</span>
+										</td>
+									</tr>
+								{% else %}
+									<tr>
+										<td onclose="3"><p>Utilisateur non classés pour l'instant...</p></td>
+									</tr>
+								{% endfor %}
+							</table>
+
+						</div>
+						<div class="pt-4">
+							{{ knp_pagination_render(users) }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Home Welcome section -->
+{% endblock %}

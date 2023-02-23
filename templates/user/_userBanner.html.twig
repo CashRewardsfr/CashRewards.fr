@@ -1,0 +1,55 @@
+<section class="banner-picture bg-primary">
+	<div class="container pt-3">
+
+	</div>
+</section>
+
+<section class="compte-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3 col-sm-12 d-flex align-content-stretch">
+				<div class="text-center img-row">
+					<a href="{{ path('app_avatar_avatar') }}">
+						{% if userAvatar(app.user) %}
+							<img src="{{ vich_uploader_asset(userAvatar(app.user)) | imagine_filter('medium_size') }}" class="rounded-circle img-thumbnail" alt="{{ app.user.pseudo }}" width="200" height="200"/>
+						{% else %}
+							<img src="{{ asset('img/user.jpg') }}" width="200" height="200" class="rounded-circle img-thumbnail">
+						{% endif %}
+					</a>
+
+					{% if app.request.attributes.get('_route') == 'app_user_profil' %}
+					<div class="pt-3 text-center">
+						<a href="{{ path('app_avatar_avatar') }}">
+							<span class="btn btn-sm btn-outline-secondary mr-2"><i class="fa fa-image"></i> Image de profil</span>
+						</a>
+						<a href="{{ path('app_user_edit_profil') }}"><span class="btn btn-sm btn-outline-primary"><i class="fa fa-pen"></i></span></a>
+					</div>
+					{% endif %}
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-6 d-flex align-content-stretch">
+				<div class="info-box">
+					<h1 class="user-name">{{ app.user.pseudo }}</h1>
+					<strong class="badge dadge-light">{{ app.user.email }}</strong>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-6 d-flex align-content-stretch">
+				<div class="info-box">
+					<span class="text-black"><i class="fa fa-money-bill-wave"></i> Points</span>
+					<h3 class="text-primary h2" id="points">{{ app.user.points ? app.user.points : 0 }}</h3>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-12 d-flex align-content-stretch">
+				<div class="info-box">
+					<span class="text-black"><i class="fa fa-globe"></i> Dernière connexion</span>
+					<span class="text-primary badge">{{ app.user.lastConnexion|date('d/m/Y à H:i') }}</span>
+				</div>
+			</div>
+		</div>
+		<br>
+	</div>
+</section>
+<script>
+	document.querySelector('#points').innerHTML = new Intl.NumberFormat('en-US').format(document.querySelector('#points').innerHTML);
+</script>
+<!-- Section missions -->

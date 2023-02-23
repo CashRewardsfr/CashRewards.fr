@@ -1,0 +1,14 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    form_themes: ['bootstrap_4_layout.html.twig']
+    #form_themes: ['bootstrap_4_Horizontal_layout.html.twig']
+    globals:
+        app_environement: '%env(APP_ENV)%'
+        appName: 'CashRewards'
+        currency: '$'
+        ashtag: '#'
+        appConcepteur: "HL Conception"
+
+when@test:
+    twig:
+        strict_variables: true

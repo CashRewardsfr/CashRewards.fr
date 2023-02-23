@@ -1,0 +1,251 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}{{ appName }} Tableau de bord{% endblock %}
+
+{% block colclass %}col-md-10 mx-auto{% endblock %}
+
+{% block pagetitle %}
+<div class="row">
+    <div class="col-12">
+        <div class="form-head mb-4 mb-sm-5 d-flex  flex-wrap align-items-center ">
+            <h2 class="font-w600 mb-0 mr-auto text-primary">{{ appName }} Tableau de bord</h2>
+        </div>
+    </div>
+    <hr class="border border-primary">
+</div>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="widget-stat card bg-transparent">
+            <div class="card-body p-4">
+                <div class="media ai-icon">
+                    <span class="mr-3 bgl-primary text-primary">
+                        <i class="la la-users"></i>
+                    </span>
+                    <div class="media-body">
+                        <p class="mb-1">Total Utilisateurs</p>
+                        <h4 class="mb-0">{{ (users|length)|number_format(0, '.', ' ') }}</h4>
+                        <a href="{{ path('app_admin_users_crud_index') }}" class="btn btn-outline-secondary float-lg-right">Voir toute la liste</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header pb-2 d-block d-sm-flex flex-wrap border-0">
+                <div class="mb-3">
+                    <h4 class="fs-20 text-black">Dernières inscriptions</h4>
+                    <p class="mb-0 fs-12">Liste des utilisateurs inscrits dernièrement</p>
+                </div>
+            </div>
+            <div class="card-body tab-content p-0">
+                <div class="">
+                    <div class="table-responsive">
+                        <table class="shadow-hover table display mb-4 dataTablesCard short-one card-table text-black">
+                            <tbody>
+                                {% for user in usersListe(4) %}
+                                <tr>
+                                    <td>
+                                        {% include('admin/admin_users_crud/_imgBox.html.twig') %}
+                                    </td>
+                                    <td class="wspace-no">
+                                        <strong class="font-w600 text-black">{{ user.pseudo }}</strong>
+                                        <span class="badge badge-light">{{ user.email }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="text-black">Inscrit le: {{ user.created|date('d/m/Y') }}</span>
+                                    </td>
+                                    <td>
+                                        Parrain: <strong class="font-w600 text-black">{{ user.parrain ? user.parrain.pseudo : 'Aucun' }}</strong>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="3">Aucune inscription pour l'instant...</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer border-0 p-0 caret mt-1">
+                <a href="{{ path('app_admin_users_crud_index') }}" class="btn-link"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </div>       
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="widget-stat card bg-transparent">
+            <div class="card-body p-4">
+                <div class="media ai-icon">
+                    <span class="mr-3 bgl-warning text-warning">
+                        <svg id="icon-orders" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </span>
+                    <div class="media-body">
+                        <p class="mb-1">Missions</p>
+                        <h4 class="mb-0">{{ (missions|length)|number_format(2, '.', ' ') }}</h4>
+                        <a href="{{ path('app_admin_missions_crud_index') }}" class="btn btn-outline-secondary float-lg-right">Voir toute la liste</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header pb-2 d-block d-sm-flex flex-wrap border-0">
+                <div class="mb-3">
+                    <h4 class="fs-20 text-black">Dernières missions</h4>
+                    <p class="mb-0 fs-12">Liste des missions éffectuées dernièrement</p>
+                </div>
+            </div>
+            <div class="card-body tab-content p-0">
+                <div class="">
+                    <div class="table-responsive">
+                        <table class="table shadow-hover display mb-4 dataTablesCard short-one card-table text-black">
+                            <tbody>
+                                {% for mission in missionsListe(4) %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            {% if mission.user.avatar %}
+                                            <img src="{{ vich_uploader_asset(mission.user) | imagine_filter('medium_avatar') }}" class="rounded-circle mr-2"  width="60" height="60" alt="{{ mission.user.pseudo }}"/>
+                                            {% else %}
+                                            <img src="{{ asset('img/user.jpg') }}" class="rounded-circle mr-2" width="60" height="60">
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                    <td class="wspace-no">
+                                        <span class="font-w600 text-black">{{ mission.description }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="text-black">{{ mission.created|date('d/m/Y') }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="font-w600 text-black">{{ mission.amount|number_format(2, ',', ' ') }} Points</span>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="4"></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer border-0 p-0 caret mt-1">
+                <a href="{{ path('app_admin_missions_crud_index') }}" class="btn-link"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="widget-stat card bg-transparent">
+            <div class="card-body p-4">
+                <div class="media ai-icon">
+                    <span class="mr-3 bgl-primary text-primary">
+                        <i class="la la-users"></i>
+                    </span>
+                    <div class="media-body">
+                        <p class="mb-1">Demandes de paiements</p>
+                        <h4 class="mb-0">{{ (paiements|length)|number_format(2, '.', ' ') }}</h4>
+                        <a href="{{ path('app_admin_paiements_crud_index') }}" class="btn btn-outline-secondary float-lg-right">Voir toute la liste</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% for paiement in paiements %}
+    <div class="col-6">
+        <div class="widget-stat card bg-{{ paiement.statuts ? 'success' : 'dark'}}">
+            <div class="card-body p-4">
+                <div class="media">
+                    <span class="mr-3">
+                        <i class="flaticon-381-diamond"></i>
+                    </span>
+                    <div class="media-body text-white text-right">
+                        <p class="mb-1">Demandes de paiements {{ paiement.statuts ? 'validées' : 'En attente'}}</p>
+                        <h3 class="text-white">{{ paiement.groupstatut }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p>Aucune demandes de paiements pour l'instant...</p>
+    {% endfor %}
+    <div class="col-12">
+        <div class="card w-100">
+            <div class="card-header pb-2 d-block d-sm-flex flex-wrap border-0">
+                <div class="mb-3">
+                    <h4 class="fs-20 text-black">Dernières demandes de paiements</h4>
+                    <p class="mb-0 fs-12">Liste des dernières demandes de paiements</p>
+                </div>
+            </div>
+            <div class="card-body tab-content p-0">
+                <div class="table-responsive">
+                    <table class="table shadow-hover display mb-4 dataTablesCard short-one card-table text-black w-100">
+                        <tbody>
+                            {% for paiement in paiementsListe(4) %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        {% if paiement.user.avatar %}
+                                        <img src="{{ vich_uploader_asset(paiement.user) | imagine_filter('medium_avatar') }}" class="rounded-circle mr-2"  width="60" height="60" alt="{{ paiement.user.pseudo }}"/>
+                                        {% else %}
+                                        <img src="{{ asset('img/user.jpg') }}" class="rounded-circle mr-2" width="60" height="60">
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td class="wspace-no">
+                                    <svg class="mr-1" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12.001 0C5.37358 0 0.000976562 5.3726 0.000976562 12C0.000976562 18.6274 5.37358 24 12.001 24C18.6284 24 24.001 18.6274 24.001 12C23.9934 5.37574 18.6252 0.00758581 12.001 0ZM16.2867 18.0001H9.42964C8.95618 18.0001 8.57244 17.6164 8.57244 17.1429C8.57244 17.1024 8.57532 17.0618 8.58107 17.0216L9.22613 12.5054L7.9232 12.8313C7.85519 12.8486 7.78535 12.8572 7.71524 12.8572C7.24178 12.8567 6.85857 12.4727 6.85883 11.9992C6.85935 11.6063 7.12669 11.2642 7.50781 11.1684L9.48771 10.6735L10.2952 5.0213C10.3622 4.55254 10.7964 4.22714 11.2652 4.2941C11.7339 4.36107 12.0593 4.79529 11.9923 5.26404L11.2835 10.2247L14.3646 9.4543C14.8232 9.33737 15.2896 9.61439 15.4062 10.0729C15.5232 10.5315 15.2461 10.9979 14.7876 11.1148C14.785 11.1153 14.7824 11.1161 14.7797 11.1166L11.0214 12.0562L10.4174 16.2857H16.2867C16.7602 16.2857 17.1439 16.6695 17.1439 17.1429C17.1439 17.6161 16.7602 18.0001 16.2867 18.0001Z" fill="#374C98"></path>
+                                    </svg>
+                                    <span class="font-w600 text-black">{{ paiement.virementType }}</span>
+                                </td>
+                                <td>
+                                    <span class="text-black">{{ paiement.created|date('d/m/Y') }}</span>
+                                </td>
+                                <td>
+                                    <span class="font-w600 text-black">{{ currency ~ paiement.montant|number_format(2, ',', ' ') }}</span>
+                                </td>
+                                <td><span class="badge badge-outline-{{ paiement.statut ? 'success' : 'dark' }} float-right">{{ paiement.statut ? 'Validée' : 'En attente' }}</span></td>
+                                <td>
+                                    {% if paiement.statut %}
+                                    {% include('admin/admin_paiements_crud/_validate_form.html.twig') %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6">Aucune demande de paiement...</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer border-0 p-0 caret mt-1">
+                <a href="{{ path('app_admin_paiements_crud_index') }}" class="btn-link"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

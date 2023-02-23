@@ -1,0 +1,22 @@
+<table class="table mission-historique-table">
+	<tr>
+		<th>ID</th>
+		<th>DESCRIPTION</th>
+		<th>POINTS GAGNER</th>
+		<th>OFFERT ID</th>
+		<th>CREATED</th>
+	</tr>
+	{% for mission in missions %}
+	<tr>
+		<td>{{ mission.id }}</td>
+		<td>{{ mission.description }}</td>
+		<td><span class="badge badge-warning badge-sm">{{ mission.amount }}</span></td>
+		<td>{{ mission.offerId }}</td>
+		<td>{{ mission.created|date('d/m/Y') }}</td>
+	</tr>
+	{% else %}
+	<tr>
+		<td colspan="5">Aucune mission effectuées...</td>
+	</tr>
+	{% endfor %}
+</table>

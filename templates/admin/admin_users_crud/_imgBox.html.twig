@@ -1,0 +1,7 @@
+<div class="d-flex align-items-center">
+    {% if user.avatar %}
+    <img src="{{ vich_uploader_asset(user) | imagine_filter('medium_avatar') }}" class="rounded-circle mr-2"  width="60" height="60" alt="{{ user.pseudo }}"/>
+    {% else %}
+    <img src="{{ asset('img/user.jpg') }}" class="rounded-circle mr-2" width="60" height="60">
+    {% endif %}
+</div>

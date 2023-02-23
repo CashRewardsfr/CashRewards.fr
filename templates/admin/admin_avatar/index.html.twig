@@ -1,0 +1,93 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Avatars de comptes{% endblock %}
+
+{% block colclass %}col-md-12{% endblock %}
+
+{% block pagetitle %}
+<div class="form-head mb-sm-5 mb-3 d-flex flex-wrap align-items-center">
+    <h2 class="font-w600 title mb-2 mr-auto ">Avatars de comptes</h2>
+</div>
+{% endblock %}
+
+{% block body %}
+
+<div class="card">
+    <div class="card-header">
+        <h4>Avatars de comptes</h4>
+        <span class="badge badge-outline-success float-lg-right">Total avatar: {{ avatars.getTotalItemCount }}</span>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table shadow-hover display mb-4 dataTablesCard short-one card-table text-black w-100">
+                <thead>
+                    <tr>
+                        <th>#ID</th>
+                        <th>Image</th>
+                        <th>Auteur</th>
+                        <th>Télécharger</th>
+                        <th>Changer le</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for avatar in avatars %}
+                    <tr>
+                        <td>{{ avatar.id }}</td>
+                        <td>
+                            <a href="{{ path('app_admin_users_crud_show', {id: avatar.user.id }) }}">
+                                {% if avatar.imageName %}
+                                <img src="{{ vich_uploader_asset(avatar) | imagine_filter('large_avatar') }}" class="rounded mr-2"  width="60" height="60" alt="{{ avatar.user.pseudo }}"/>
+                                {% else %}
+                                <img src="{{ asset('img/user.jpg') }}" class="rounded mr-2" width="100" height="100">
+                                {% endif %}
+                            </a>
+                        </td>
+                        <td><a class="font-w600" href="{{ path('app_admin_users_crud_show', {id: avatar.user.id }) }}">{{ avatar.user.pseudo }}</a></td>
+                        <td>{{ avatar.created ? avatar.created|date('d/m/Y') : '' }}</td>
+                        <td>{{ avatar.updated ? avatar.updated|date('d/m/Y') : '' }}</td>
+                        <td>
+                            <a  data-toggle="modal" href="#imageModal-{{ avatar.id }}" class="btn btn-primary"><i class="fa fa-image"></i></a>
+
+                            <div class="modal fade" id="imageModal-{{ avatar.id }}">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                  <!-- Modal Header -->
+                                  <div class="modal-header">
+                                    <h4 class="modal-title">Image de profil de {{ avatar.user.pseudo }}</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  </div>
+
+                                  <!-- Modal body -->
+                                  <div class="modal-body">
+                                    {% if avatar.imageName %}
+                                    <img src="{{ vich_uploader_asset(avatar) | imagine_filter('large_size') }}" class="rounded mr-2"  alt="{{ avatar.user.pseudo }}" class="img-fluid" />
+                                    {% else %}
+                                    <img src="{{ asset('img/user.jpg') }}" class="rounded mr-2" class="img-fluid">
+                                    {% endif %}
+                                  </div>
+
+                                </div>
+                            </div>
+                            </div>
+
+                            {{ include('admin/admin_avatar/_delete_form.html.twig') }}
+
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5">Aucune image...</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="9">{{ knp_pagination_render(avatars) }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

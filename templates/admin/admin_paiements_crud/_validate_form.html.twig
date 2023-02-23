@@ -1,0 +1,4 @@
+<form class="d-inline" method="post" action="{{ path('app_admin_validate_paiements', {'id': paiement.id}) }}" onsubmit="return confirm('Etes vous sûre de vouloir valider ce payment?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('validate' ~ paiement.id) }}">
+    <button class="btn btn-primary">Valider</button>
+</form>

@@ -1,0 +1,12 @@
+<div class="media rounded mb-2">
+	{% if userAvatar(affilier) %}
+		<img src="{{ vich_uploader_asset(userAvatar(affilier)) | imagine_filter('medium_avatar') }}" class="rounded-circle img-thumbnail mr-2 mt-1" alt="{{ affilier.pseudo }}"/>
+	{% else %}
+		<img src="{{ asset('img/user.jpg') }}" width="50" height="50" class="rounded-circle img-thumbnail mr-2 mt-1" alt="{{ affilier.pseudo }}>
+	{% endif %}
+
+	<div class="media-body p-0">
+		<p><strong class="p-0 m-0">{{ affilier.pseudo }}</strong><br>
+		<a href="mailto:{{ affilier.email }}" class="small">{{ affilier.email }}</a></p>
+	</div>
+</div>
