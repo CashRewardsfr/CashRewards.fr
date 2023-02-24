@@ -82,7 +82,7 @@ class CallbackController extends AbstractController
         $userId = $request->get('uid');
         $description = $request->get('offer_name');
         $amount = $request->get('currency_amount');
-        //if(in_array($serverIp, $vanishIpOffer)){
+        if(in_array($serverIp, $vanishIpOffer)){
             $user = $userRepository->findOneBy(['id' => $userId]);
             if ($user) {
                 $mission = new Mission();
@@ -97,7 +97,7 @@ class CallbackController extends AbstractController
                 return new Response(1);
             }
             return new Response(-2);
-        //}
+        }
         return new Response(-1);
     }
     
