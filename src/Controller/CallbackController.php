@@ -209,61 +209,26 @@ class CallbackController extends AbstractController
         $amount = $request->get('amount');
         $description = $request->get('offerName');
         $status = $request->get('status');
-
-
         if($key === "g5c21mln8j9jd6l1b8h129jc"){
-            if($status == "COMPLETE") {
+            $user = $userRepository->findOneBy(['id' => $userId]);
+            if ($user) {
+                if ($status == 'SCREENOUT') {
+                    $description = 'Compensation';
+                }
                 $mission = new Mission();
-    
-                // Recupération de l'utilisateur
-                $user = $userRepository->findOneBy(['id' => $userId]);
-    
-                // Recupération du parrain
-                $parrain = $user->getParrain();
-    
-                // Incrémentation des points dans la base de données
-                $user->setPoints($user->getPoints() + $amount);
-    
-                // Inssertion
                 $mission->setUser($user);
-                $mission->setAmount($amount);
-                $mission->setDescription("[Bitlabs] " . $description);
-
-                //$mission->setTransactionId($transactionId);
-                //$mission->setStatut($statut);
-    
-                // Enregistrement dans la base de données
+                $mission->setAmount(intval($amount));
+                $mission->setDescription('[Bitlabs] ' . $description);
                 $missionRepository->add($mission);
-                $userRepository->add($user);
-                //$userRepository->add($parrain);
-            } else if($status == "SCREENOUT") {
-                $mission = new Mission();
-    
-                // Recupération de l'utilisateur
-                $user = $userRepository->findOneBy(['id' => $userId]);
-    
-                // Recupération du parrain
-                $parrain = $user->getParrain();
-    
-                // Incrémentation des points dans la base de données
-                $user->setPoints($user->getPoints() + $amount);
-    
-                // Inssertion
-                $mission->setUser($user);
-                $mission->setAmount($amount);
-                $mission->setDescription("[Bitlabs] Compensation");
 
-                //$mission->setTransactionId($transactionId);
-                //$mission->setStatut($statut);
-    
-                // Enregistrement dans la base de données
-                $missionRepository->add($mission);
+                $user->setPoints($user->getPoints() + intval($amount));
                 $userRepository->add($user);
-                //$userRepository->add($parrain);
+
+                return new Response(1);
             }
+            return new Response(-2);
         }
-
-        return new JsonResponse([], Response::HTTP_OK);
+        return new Response(-1);
     }
 
     #[Route('/lootv', name: 'app_callback_lootv')]
