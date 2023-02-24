@@ -1,0 +1,21 @@
+name: deploy master
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+    
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Executing install script master
+      uses: appleboy/ssh-action@master
+      with:
+        HOST: 51.254.115.144
+        USERNAME: ubuntu
+        PASSWORD: Q4TkQeMSqFf5
+        PORT: 22
+        script: ./install.sh
