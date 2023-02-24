@@ -19,69 +19,59 @@ class CallbackController extends AbstractController
     #[Route('/makemoney', name: 'app_callback_makemoney')]
     public function makemoney(UserRepository $userRepository, MissionRepository $missionRepository, Request $request): Response
     {
-        $vanishIpOffer = "63.32.127.99";
+        $vanishIpOffer = '63.32.127.99';
         $serverIp = $request->getClientIp();
         $userId = $request->get('user_id');
         $amount = $request->get('amount');
         $offerId = $request->get('offerid');
         $offername = $request->get('offername');
-
         if ($serverIp === $vanishIpOffer) {
-            $mission = new Mission();
-            
-            $user = $userRepository->findOneBy(['id' => $userId]); // Recupération de l'utilisateur
+            $user = $userRepository->findOneBy(['id' => $userId]);
             if ($user) {
-                $user->setPoints($user->getPoints() + $amount); // Incrémentation des points dans la base de données
+                $mission = new Mission();
                 $mission->setUser($user);
-                $mission->setAmount($amount);
+                $mission->setAmount(floatval($amount));
                 $mission->setOfferId($offerId);
-                $mission->setDescription("[MakeMoney] " . $offername);
+                $mission->setDescription('[MakeMoney] ' . $offername);
+                $missionRepository->add($mission);
 
-                $missionRepository->add($mission); // Enregistrement dans la base de données
-                $userRepository->add($user); // Enregistrement dans la base de données
+                $user->setPoints($user->getPoints() + floatval($amount));
+                $userRepository->add($user);
+
+                return new Response(1);
             }
+            return new Response(-2);
         }
-        
-        return new JsonResponse([], Response::HTTP_OK);
+        return new Response(-1);
     }
     
     #[Route('/offertoro', name: 'app_callback_offertoro')]
     public function offertoro(UserRepository $userRepository, MissionRepository $missionRepository, Request $request): Response
     {
         $serverIp = $request->getClientIp();
-        $vanishIpOffer = "54.175.173.245";
-
+        $vanishIpOffer = '54.175.173.245';
         $userId = $request->get('user_id');
         $offerId = $request->get('oid');
         $amount = $request->get('amount');
         $description = $request->get('o_name');
-
         if ($serverIp === $vanishIpOffer) {
-
-            $mission = new Mission();
-
-            // Recupération de l'utilisateur
             $user = $userRepository->findOneBy(['id' => $userId]);
+            if ($user) {
+                $mission = new Mission();
+                $mission->setUser($user);
+                $mission->setAmount(floatval($amount));
+                $mission->setOfferId($offerId);
+                $mission->setDescription("[Offertoro] " . $description);
+                $missionRepository->add($mission);
 
-            // Recupération du parrain
-            //$parrain = $user->getParrain();
+                $user->setPoints($user->getPoints() + floatval($amount));
+                $userRepository->add($user);
 
-            // Incrémentation des points dans la base de données
-            $user->setPoints($user->getPoints() + $amount);
-
-            // Inssertion
-            $mission->setUser($user);
-            $mission->setAmount($amount);
-            $mission->setOfferId($offerId);
-            $mission->setDescription("[Offertoro] " . $description);
-
-            // Enregistrement dans la base de données
-            $missionRepository->add($mission);
-            $userRepository->add($user);
-            //$userRepository->add($parrain);
+                return new Response(1);
+            }
+            return new Response(-2);
         }
-
-        return new JsonResponse([], Response::HTTP_OK);
+        return new Response(-1);
     }
 
     #[Route('/ayet', name: 'app_callback_ayet')]
@@ -301,52 +291,28 @@ class CallbackController extends AbstractController
     {
         $serverIp = $request->getClientIp();
         $vanishIpOffer = "52.42.57.125";
-
         $userId = $request->get('s1');
-
-
         $offerId = $request->get('offer_id');
         $amount = $request->get('points');
-
         $description = $request->get('offer_name');
-
-        $mission = new Mission();
-
-        //if ($serverIp === $vanishIpOffer) {
-
-
-
-
-            // Recupération de l'utilisateur
+        if ($serverIp === $vanishIpOffer) {
             $user = $userRepository->findOneBy(['id' => $userId]);
-
             if ($user) {
                 $mission = new Mission();
-                $user->setPoints($user->getPoints() + intval($amount));
-
-                // Incrémentation des points dans la base de données
-    
-                // Inssertion
                 $mission->setUser($user);
-                $mission->setAmount($amount);
+                $mission->setAmount(floatval($amount));
                 $mission->setOfferId($offerId);
                 $mission->setDescription("[Adgate] " . $description);
-    
-                // Enregistrement dans la base de données
                 $missionRepository->add($mission);
+
+                $user->setPoints($user->getPoints() + floatval($amount));
                 $userRepository->add($user);
-                //$userRepository->add($parrain);
 
+                return new Response(1);
             }
-            // Recupération du parrain
-            //$parrain = $user->getParrain();
-
-
-
-        //}
-
-
-        return new JsonResponse([], Response::HTTP_OK);
+            return new Response(-2);
+        }
+        return new Response(-1);
     }
 
     private function userId()
