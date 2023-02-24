@@ -30,12 +30,12 @@ class CallbackController extends AbstractController
             if ($user) {
                 $mission = new Mission();
                 $mission->setUser($user);
-                $mission->setAmount(floatval($amount));
+                $mission->setAmount(intval($amount));
                 $mission->setOfferId($offerId);
                 $mission->setDescription('[MakeMoney] ' . $offername);
                 $missionRepository->add($mission);
 
-                $user->setPoints($user->getPoints() + floatval($amount));
+                $user->setPoints($user->getPoints() + intval($amount));
                 $userRepository->add($user);
 
                 return new Response(1);
@@ -59,12 +59,12 @@ class CallbackController extends AbstractController
             if ($user) {
                 $mission = new Mission();
                 $mission->setUser($user);
-                $mission->setAmount(floatval($amount));
+                $mission->setAmount(intval($amount));
                 $mission->setOfferId($offerId);
                 $mission->setDescription("[Offertoro] " . $description);
                 $missionRepository->add($mission);
 
-                $user->setPoints($user->getPoints() + floatval($amount));
+                $user->setPoints($user->getPoints() + intval($amount));
                 $userRepository->add($user);
 
                 return new Response(1);
@@ -78,41 +78,27 @@ class CallbackController extends AbstractController
     public function ayet(UserRepository $userRepository, MissionRepository $missionRepository, Request $request): Response
     {
         $serverIp = $request->getClientIp();
-        $vanishIpOffer = ["35.165.166.40", "35.166.159.131", "52.40.3.140"];
+        $vanishIpOffer = ['35.165.166.40', '35.166.159.131', '52.40.3.140'];
         $userId = $request->get('uid');
-        //$offerId = $request->get('offer_id');
         $description = $request->get('offer_name');
         $amount = $request->get('currency_amount');
-
-
-        if(in_array($serverIp, $vanishIpOffer)){
-
-            $mission = new Mission();
-
-            // Recupération de l'utilisateur
+        //if(in_array($serverIp, $vanishIpOffer)){
             $user = $userRepository->findOneBy(['id' => $userId]);
+            if ($user) {
+                $mission = new Mission();
+                $mission->setUser($user);
+                $mission->setAmount(intval($amount));
+                $mission->setDescription('[Ayet] ' . $description);
+                $missionRepository->add($mission);
 
-            // Recupération du parrain
-            $parrain = $user->getParrain();
+                $user->setPoints($user->getPoints() + intval($amount));
+                $userRepository->add($user);
 
-            // Incrémentation des points dans la base de données
-            $user->setPoints($user->getPoints() + $amount);
-
-            // Inssertion
-            $mission->setUser($user);
-            $mission->setAmount($amount);
-            //$mission->setOfferId($offerId);
-            $mission->setDescription("[Ayet] " . $description);
-
-            // Enregistrement dans la base de données
-            $missionRepository->add($mission);
-            $userRepository->add($user);
-            //$userRepository->add($parrain);
-        }else{
-
-        }
-
-        return new JsonResponse([], Response::HTTP_OK);
+                return new Response(1);
+            }
+            return new Response(-2);
+        //}
+        return new Response(-1);
     }
     
     #[Route('/lootably', name: 'app_callback_lootably')]
@@ -300,12 +286,12 @@ class CallbackController extends AbstractController
             if ($user) {
                 $mission = new Mission();
                 $mission->setUser($user);
-                $mission->setAmount(floatval($amount));
+                $mission->setAmount(intval($amount));
                 $mission->setOfferId($offerId);
                 $mission->setDescription("[Adgate] " . $description);
                 $missionRepository->add($mission);
 
-                $user->setPoints($user->getPoints() + floatval($amount));
+                $user->setPoints($user->getPoints() + intval($amount));
                 $userRepository->add($user);
 
                 return new Response(1);
