@@ -84,6 +84,11 @@ class OffersController extends AbstractController
 
     private function userId()
     {
-        return $this->getUser()->getId();
+        if ($this->getUser() == null) {
+            header('Location: /login', true, 303);
+            die();
+        } else {
+            return $this->getUser()->getId();   
+        }
     }
 }

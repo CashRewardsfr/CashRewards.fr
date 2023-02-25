@@ -25,7 +25,7 @@ class HomeController extends AbstractController
                 $user->setPoints($user->GetPoints() + 15);
                 $userRepository->add($user);
 
-                $this->addFlash('success', 'Vous avez gagnez 15 points de bonus journalier + log');
+                $this->addFlash('success', 'Vous avez gagnez 15 points de bonus journalier');
             }            
         }
 
