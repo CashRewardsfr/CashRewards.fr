@@ -21,7 +21,7 @@ class CallbackController extends AbstractController
     #[Route('/offertoro', name: 'app_callback_offertoro')]
     public function offertoro(UserRepository $userRepository, MissionRepository $missionRepository, LogRepository $logRepository, Request $request): Response
     {
-        $secretKey = $request->getParameter('secret_key');
+        $secretKey = $request->get('secret_key');
         $vanishSecretKey = 'dZk4SheTe6T7SERbx9FA6NzLMzc2hHnj92CU9vsYJb69973gc3jA36YT925r5Ak3';
         $userId = $request->get('user_id');
         $offerId = $request->get('oid');
