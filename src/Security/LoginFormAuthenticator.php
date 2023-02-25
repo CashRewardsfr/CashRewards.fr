@@ -42,10 +42,12 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         // Mise à jour des date de connexion 
         $user = $this->userRepository->findOneBy(['email' => $email]);
 
-        $user->setLastConnexion(new \DateTimeImmutable());
-        $user->setConnected(1);
-        
-        $this->userRepository->add($user);
+        if ($user) {
+            $user->setLastConnexion(new \DateTimeImmutable());
+            $user->setConnected(1);
+            
+            $this->userRepository->add($user);
+        }
 
         return new Passport(
             new UserBadge($email),
