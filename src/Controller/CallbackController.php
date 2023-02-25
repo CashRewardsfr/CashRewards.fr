@@ -22,7 +22,7 @@ class CallbackController extends AbstractController
     public function offertoro(UserRepository $userRepository, MissionRepository $missionRepository, LogRepository $logRepository, Request $request): Response
     {
         $serverIp = $request->getClientIp();
-        $vanishIpOffer = '54.175.173.245';
+        $vanishIpOffer = '202.90.152.68';
         $userId = $request->get('user_id');
         $offerId = $request->get('oid');
         $amount = $request->get('amount');
