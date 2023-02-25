@@ -21,8 +21,8 @@ class CallbackController extends AbstractController
     #[Route('/offertoro', name: 'app_callback_offertoro')]
     public function offertoro(UserRepository $userRepository, MissionRepository $missionRepository, LogRepository $logRepository, Request $request): Response
     {
-        $serverIp = $request->getClientIp();
-        $vanishIpOffer = ['202.90.152.68', '203.177.59.200', '54.175.173.245'];
+        $secretKey = $request->getParameter('secret_key');
+        $vanishSecretKey = 'dZk4SheTe6T7SERbx9FA6NzLMzc2hHnj92CU9vsYJb69973gc3jA36YT925r5Ak3';
         $userId = $request->get('user_id');
         $offerId = $request->get('oid');
         $amount = $request->get('amount');
@@ -31,15 +31,15 @@ class CallbackController extends AbstractController
         $log = new Log();
         $log->setOfferwallName('offertoro');
         $log->setParams(array(
-            "serverIp"=> $serverIp,
-            "vanishIpOffer"=> $vanishIpOffer,
+            "secretKey"=> $secretKey,
+            "vanishSecretKey"=> $vanishSecretKey,
             "userId"=> $userId,
             "offerId"=> $offerId,
             "amount"=> $amount,
             "description"=> $description
         ));
 
-        if (in_array($serverIp, $vanishIpOffer)) {
+        if ($secretKey == $vanishSecretKey) {
             $user = $userRepository->findOneBy(['id' => $userId]);
             if ($user) {
                 $mission = new Mission();
