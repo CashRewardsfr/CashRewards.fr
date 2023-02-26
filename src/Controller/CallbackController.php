@@ -159,6 +159,12 @@ class CallbackController extends AbstractController
     #[Route('/lootably', name: 'app_callback_lootably')]
     public function lootably(UserRepository $userRepository, MissionRepository $missionRepository, LogRepository $logRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
+        $log = new Log();
+        $log->setOfferwallName('lootably cb');
+        $log->setParams(array());
+        $log->setResult(-10);
+        $logRepository->add($log);
+
         $key = $request->get('hash');
         $userId = $request->get('userID');
         $ip = $request->get('ip');
