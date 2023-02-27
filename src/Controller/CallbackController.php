@@ -362,12 +362,6 @@ class CallbackController extends AbstractController
     #[Route('/adgate', name: 'app_callback_adgate')]
     public function adgate(UserRepository $userRepository, AvatarRepository $avatarRepository, LogRepository $logRepository, MissionRepository $missionRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $log = new Log();
-        $log->setOfferwallName('adgate cb');
-        $log->setParams(array());
-        $log->setResult(-10);
-        $logRepository->add($log);
-
         $serverIp = $request->getClientIp();
         $vanishIpOffer = "52.42.57.125";
         $userId = $request->get('s1');
