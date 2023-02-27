@@ -159,12 +159,6 @@ class CallbackController extends AbstractController
     #[Route('/lootably', name: 'app_callback_lootably')]
     public function lootably(UserRepository $userRepository, MissionRepository $missionRepository, LogRepository $logRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $log = new Log();
-        $log->setOfferwallName('lootably cb');
-        $log->setParams(array());
-        $log->setResult(-10);
-        $logRepository->add($log);
-
         $key = $request->get('hash');
         $userId = $request->get('userID');
         $ip = $request->get('ip');
@@ -346,17 +340,6 @@ class CallbackController extends AbstractController
         $log->setResult(-1);
         $logRepository->add($log);
         return new Response(-1);
-    }
-
-    #[Route('/lootv', name: 'app_callback_lootv')]
-    public function lootv(UserRepository $userRepository, MissionRepository $missionRepository, LogRepository $logRepository, Request $request): Response
-    {
-        $log = new Log();
-        $log->setOfferwallName('lootv');
-        $log->setParams(array());
-        $log->setResult(1);
-        $logRepository->add($log);
-        return new Response(1);
     }
 
     #[Route('/adgate', name: 'app_callback_adgate')]
