@@ -46,6 +46,15 @@ class OffersController extends AbstractController
         ]);
     }
     
+    #[Route('/mmwall', name: 'app_offers_mmwall')]
+    public function mmwall(): Response
+    {
+        return $this->render('offers/mmwall.html.twig', [
+            'offer' => 'mmwall',
+            'https' => 'https://wall.make-money.top/?p=340&u='. $this->userId() .''
+        ]);
+    }
+    
     #[Route('/monlix', name: 'app_offers_monlix')]
     public function monlix(): Response
     {
