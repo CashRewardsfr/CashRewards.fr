@@ -30957,3 +30957,15 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 .dz-demo-panel{
   display: none!important;
 }
+
+@media only screen and (max-width: 768px) {
+  .customnavadmin {
+    display: none !important;
+  }
+  .nav-header {
+    width: 0px !important;
+  }
+  [data-sidebar-style="overlay"] .header .navbar {
+    padding-left: 50px !important;
+  }
+}
