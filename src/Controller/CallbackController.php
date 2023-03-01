@@ -204,53 +204,6 @@ class CallbackController extends AbstractController
         return new Response(-1);
     }    
 
-    #[Route('/adgem', name: 'app_callback_adgem')]
-    public function adgem(UserRepository $userRepository, MissionRepository $missionRepository, LogRepository $logRepository, Request $request): Response
-    {
-        $serverIp = $request->getClientIp();
-        $userId = $request->get('player_id');
-        $amount = $request->get('amount');
-        $description = $request->get('campaign_name');
-        $offerId = $request->get('campaign_id');
-
-        $log = new Log();
-        $log->setOfferwallName('adgem');
-        $log->setParams(array(
-            "serverIp"=> $serverIp,
-            "ADGEM_POSTBACK_KEY_SHOULD_BE" => "57dk1m9c4elidh417c6e2i25",
-            "ADGEM_POSTBACK_KEY" => $request->get('ADGEM_POSTBACK_KEY'),
-            "userId"=> $userId,
-            "amount"=> $amount,
-            "description" => $description,
-            "offerId"=> $offerId,
-        ));
-
-        if ('57dk1m9c4elidh417c6e2i25' === $request->get('ADGEM_POSTBACK_KEY')) {
-            $user = $userRepository->findOneBy(['id' => $userId]);
-            if ($user) {
-                $mission = new Mission();
-                $mission->setUser($user);
-                $mission->setAmount(intval($amount));
-                $mission->setOfferId($offerId);
-                $mission->setDescription("[Adgem] " . $description);
-                $missionRepository->add($mission);
-
-                $user->setPoints($user->getPoints() + intval($amount));
-                $userRepository->add($user);
-
-                $log->setResult(1);
-                $logRepository->add($log);
-                return new Response(1);
-            }
-            $log->setResult(-2);
-            $logRepository->add($log);
-            return new Response(-2);
-        }
-        $log->setResult(-1);
-        $logRepository->add($log);
-        return new Response(-1);
-    }
-
     #[Route('/monlix', name: 'app_callback_monlix')]
     public function monlix(UserRepository $userRepository, MissionRepository $missionRepository, LogRepository $logRepository, Request $request): Response
     {
