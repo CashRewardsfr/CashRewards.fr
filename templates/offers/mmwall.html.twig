@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ appName ~ " " ~ offer }} {% endblock %}
+
+{% block flexBox %}{% endblock %}
+
+{% block body %}
+
+<section>
+    <div class="container-fluid">
+        {% include "offers/_iframe.html.twig" %}
+    </div>
+</section>
+
+{% endblock %}
