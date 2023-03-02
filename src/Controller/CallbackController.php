@@ -93,7 +93,7 @@ class CallbackController extends AbstractController
                 $mission->setUser($user);
                 $mission->setAmount(intval($amount));
                 $mission->setOfferId($offerId);
-                $mission->setDescription('[MakeMoney] ' . $offername);
+                $mission->setDescription('[MMWall] ' . $offername);
                 $missionRepository->add($mission);
 
                 $user->setPoints($user->getPoints() + intval($amount));
@@ -229,7 +229,7 @@ class CallbackController extends AbstractController
                 $mission = new Mission();
                 $mission->setUser($user);
                 $mission->setAmount(intval($amount));
-                $mission->setDescription("[Adgem] " . $description);
+                $mission->setDescription("[Monlix] " . $description);
                 $missionRepository->add($mission);
 
                 $user->setPoints($user->getPoints() + intval($amount));
