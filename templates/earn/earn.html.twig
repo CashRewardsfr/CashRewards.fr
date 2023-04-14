@@ -1,0 +1,199 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ appName }} - Accueil{% endblock %}
+
+{% block flexBox %}
+  {% include "home/_flexSlider.html.twig" %}
+{% endblock %}
+
+{% block body %}
+
+<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+<style>
+	.offerwalls_container {
+		margin-bottom: 100px;
+		display: flex;
+		justify-content: center;
+	}
+	.earnPageSection {
+		width: 1000px;
+		font-family: 'Rubik',sans-serif !important;
+	}
+	.sectionTitle {
+		margin-bottom: 0;
+		font-size: 25px !important;
+		font-weight: 500;
+	}
+	.mainPageTitle {
+		margin-top: 45px;
+		font-size: 25px;
+		font-weight: 500;
+	}
+	.sectionDescription {
+		color: #444c61;
+		display: block;
+		margin-block-start: 1em;
+		margin-block-end: 1em;
+		margin-inline-start: 0px;
+		margin-inline-end: 0px;
+	}
+	.offerWallBox {
+		position: relative;
+		padding: 70px 0;
+		border-radius: 10px;
+		height: 100%;
+		overflow: hidden;
+		height: 190px;
+	}
+	.hotWallLabel {
+		position: absolute;
+		top: 0;
+		right: 0;
+		background-color: red;
+		color: white;
+		padding: 4px 13px;
+		font-size: 14px;
+		border-bottom-left-radius: 10px;
+		font-weight: bold;
+	}
+	.wallTitle {
+		font-size: 18px;
+		margin: 0;
+		color: white;
+		font-weight: 300;
+		position: absolute;
+		top: 20px;
+		left: 20px;
+		margin-right: 10px;
+	}
+	.wallImgContain, .wallImgContain2, .wallImgContain3, .wallImgContain4 {
+		text-align: center;
+		width: 100%;
+	}
+	.wallImgContain img {
+		max-width: 80%;
+    	max-height: 50px;
+	}
+	.wallImgContain2 {
+		margin-top: -30px;
+	}
+	.wallImgContain3 {
+		margin-top: 10px;
+	}
+	.wallImgContain2 img {
+    	max-height: 120px;
+	}
+	.wallImgContain4 img {
+		min-height: 45px;
+	}
+	.m8 {
+    	min-width: 66.6666666667% !important;
+	}
+	.m4 {
+		min-width: 33.3333333333% !important;
+	}
+	.offerWallBoxCol  {
+		margin-bottom: 30px;
+	}
+</style>
+
+<div class="offerwalls_container">
+	<div class="earnPageSection">
+    <div class="row">
+      <div class="col s12">
+        <h1 class="sectionTitle mainPageTitle">Offer Walls</h1>
+        <p class="sectionDescription">Choisissez l'un de nos fournisseurs de murs d'offres ci-dessous pour commencer à gagner des pièces.</p>
+      </div>
+    </div>
+    <div class="row wallsRow wallsRowFlex">
+      <div class="col l8 m8 s12 offerWallBoxCol ">
+        <a class="openOfferWallBtn" href="{{ path('app_offers_adgate') }}" onclick="openSurveyModal('ayetstudios');pushState(`/earn/ayetstudios`);">
+          <div class="offerWallBox valign-wrapper" style="background-color: #46BBF9;">
+		  <div class="hotWallLabel"><i class="fa fa-fire"></i> HOT</div>
+            <h3 class="wallTitle">AdGate Media</h3>
+            <div class="wallImgContain">
+				<img src="/img/earn/adgateLogo.png">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col l4 m4 s12 offerWallBoxCol ">
+        <a class="openOfferWallBtn" href="{{ path('app_offers_offertoro') }}" onclick="openSurveyModal('cpxresearch');pushState(`/earn/cpxresearch`);">
+          <div class="offerWallBox valign-wrapper" style="background-color: #2a303c;">
+            <h3 class="wallTitle">OfferToro</h3>
+            <div class="wallImgContain">
+              <img src="/img/earn/offertoroLogo.png">
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+	<div class="row wallsRow wallsRowFlex">
+      <div class="col l4 m4 s12 offerWallBoxCol ">
+        <a class="openOfferWallBtn" href="{{ path('app_offers_ayet') }}" onclick="openSurveyModal('cpxresearch');pushState(`/earn/cpxresearch`);">
+          <div class="offerWallBox valign-wrapper" style="background-color: #2a303c;">
+            <h3 class="wallTitle">Ayet Studios</h3>
+            <div class="wallImgContain">
+              <img src="/img/earn/ayetLogo.png">
+            </div>
+          </div>
+        </a>
+      </div>
+	  <div class="col l4 m4 s12 offerWallBoxCol ">
+        <a class="openOfferWallBtn" href="{{ path('app_offers_monlix') }}" onclick="openSurveyModal('cpxresearch');pushState(`/earn/cpxresearch`);">
+          <div class="offerWallBox valign-wrapper" style="background-color: rgba(0,0,0,.05);">
+            <h3 class="wallTitle" style="color:black">Monlix</h3>
+            <div class="wallImgContain2">
+              <img src="/img/earn/monlixLogo.png">
+            </div>
+          </div>
+        </a>
+      </div>
+	  <div class="col l4 m4 s12 offerWallBoxCol ">
+        <a class="openOfferWallBtn" href="{{ path('app_offers_mmwall') }}" onclick="openSurveyModal('cpxresearch');pushState(`/earn/cpxresearch`);">
+          <div class="offerWallBox valign-wrapper" style="background-color: rgb(237, 184, 24)">
+            <h3 class="wallTitle">MM Wall</h3>
+            <div class="wallImgContain3">
+              <img src="/img/earn/mmwallLogo.png">
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+	<div class="row wallsRow wallsRowFlex">
+	  <div class="col l4 m4 s12 offerWallBoxCol ">
+        <a class="openOfferWallBtn" href="{{ path('app_offers_bitlabs') }}" onclick="openSurveyModal('cpxresearch');pushState(`/earn/cpxresearch`);">
+          <div class="offerWallBox valign-wrapper" style="background-color: rgba(0,0,0,.05);">
+            <h3 class="wallTitle" style="color:black;">BitLabs</h3>
+            <div class="wallImgContain">
+              <img src="/img/earn/bitlabsLogo.svg">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col l4 m4 s12 offerWallBoxCol ">
+        <a class="openOfferWallBtn" href="{{ path('app_offers_lootably') }}" onclick="openSurveyModal('cpxresearch');pushState(`/earn/cpxresearch`);">
+          <div class="offerWallBox valign-wrapper" style="background-color: #30B0D5;">
+            <h3 class="wallTitle">Lootably</h3>
+            <div class="wallImgContain">
+              <img src="/img/earn/lootablyLogo.png">
+            </div>
+          </div>
+        </a>
+      </div>
+	  <div class="col l4 m4 s12 offerWallBoxCol ">
+        <a class="openOfferWallBtn" href="{{ path('app_offers_lootv') }}" onclick="openSurveyModal('cpxresearch');pushState(`/earn/cpxresearch`);">
+          <div class="offerWallBox valign-wrapper" style="background-color: rgba(0,0,0,.05);">
+            <h3 class="wallTitle" style="color:black;">Loot.tv</h3>
+            <div class="wallImgContain4">
+              <img src="/img/earn/loottvLogo.png">
+            </div>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

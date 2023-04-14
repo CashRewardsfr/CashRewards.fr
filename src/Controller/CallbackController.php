@@ -273,10 +273,15 @@ class CallbackController extends AbstractController
                 if ($status == 'SCREENOUT') {
                     $description = 'Compensation';
                 }
+
+                $mission = $missionRepository->findOneBy(['transactionId' => $userId]);
+
+
                 $mission = new Mission();
                 $mission->setUser($user);
                 $mission->setAmount(intval($amount));
                 $mission->setDescription('[Bitlabs] ' . $description);
+                // $mission->setTransactionId();
                 $missionRepository->add($mission);
 
                 $user->setPoints($user->getPoints() + intval($amount));
