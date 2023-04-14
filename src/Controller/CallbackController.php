@@ -256,6 +256,7 @@ class CallbackController extends AbstractController
         $amount = $request->get('amount');
         $description = $request->get('offerName');
         $status = $request->get('status');
+        $tx = $request->get('tx');
 
         $log = new Log();
         $log->setOfferwallName('bitlabs');
@@ -274,22 +275,26 @@ class CallbackController extends AbstractController
                     $description = 'Compensation';
                 }
 
-                $mission = $missionRepository->findOneBy(['transactionId' => $userId]);
+                $mission = $missionRepository->findOneBy(['transactionId' => $tx]);
+                if ($mission) {
+                    $log->setResult(-3);
+                    $logRepository->add($log);
+                    return new Response(1);
+                } else {
+                    $mission = new Mission();
+                    $mission->setUser($user);
+                    $mission->setAmount(intval($amount));
+                    $mission->setDescription('[Bitlabs] ' . $description);
+                    $mission->setTransactionId($tx);
+                    $missionRepository->add($mission);
 
+                    $user->setPoints($user->getPoints() + intval($amount));
+                    $userRepository->add($user);
 
-                $mission = new Mission();
-                $mission->setUser($user);
-                $mission->setAmount(intval($amount));
-                $mission->setDescription('[Bitlabs] ' . $description);
-                // $mission->setTransactionId();
-                $missionRepository->add($mission);
-
-                $user->setPoints($user->getPoints() + intval($amount));
-                $userRepository->add($user);
-
-                $log->setResult(1);
-                $logRepository->add($log);
-                return new Response(1);
+                    $log->setResult(1);
+                    $logRepository->add($log);
+                    return new Response(1);
+                }
             }
             $log->setResult(-2);
             $logRepository->add($log);
