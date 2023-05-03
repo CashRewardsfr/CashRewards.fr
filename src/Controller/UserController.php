@@ -30,7 +30,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/dashboard', name: 'app_user_dashboard')]
-    public function dashboard(Request $request, MissionRepository $missionRepository, UserRepository $userRepository): Response
+    public function dashboard(Request $request, MissionRepository $missionRepository, UserRepository $userRepository, PaginatorInterface $paginator, PaiementRepository $paiementRepository): Response
     {
         $user = $this->getUser();
         $lastBonus = null;
@@ -67,10 +67,25 @@ class UserController extends AbstractController
             $mission = $missionRepository->findLastByUser($user);
         }
 
+        $parrain = $this->getUser();
+
+        $affiliers = $paginator->paginate(
+            $userRepository->findByParrain($parrain),
+            $request->query->getInt('page', 1),
+            10
+        );
+
+        $paiements = $paginator->paginate(
+            $paiementRepository->findByUser($user),
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('user/dashboard.html.twig', [
             'pointsEnCirculation' => $pointsEnCirculation,
             'mission' => $mission,
+            'affiliers' => $affiliers,
+            'paiements' => $paiements,
         ]);
     }
 

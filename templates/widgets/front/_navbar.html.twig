@@ -21,48 +21,28 @@
 						<li class="nav-item">
 							<a href="{{ path('app_earn') }}" class="nav-link"><i class="fa fa-id-card"></i> Gagner de l'argent</a>
 						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link text-sencondary dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> <i class="fa fa-info"></i>
-								Informations
-							</a>
-							<div class="dropdown-menu costom-shadow border-0">
-								<a class="dropdown-item" href="{{ path('app_user_classements') }}">Classement</a>
-								<a class="dropdown-item" href="https://discord.gg/FD2g2wZ66k" target='_blank'>Contact</a>
-							</div>
-						</li>
 						<li class="nav-item">
 							<a href="{{ path('app_user_demande_paiement') }}" class="nav-link"><i class="fa fa-cart-plus"></i> Boutique</a>
 						</li>
-
-						<li class="nav-item dropdown dropcenter">
-							<a class="nav-link green-color" href="#" id="navbardrop" data-toggle="dropdown">
-
+						<li class="nav-item">
+							<a href="{{ path('app_user_classements') }}" class="nav-link"><i class="fa fa-trophy"></i> Classement</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link text-sencondary dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 								{% if userAvatar(app.user) %}
 									<img src="{{ vich_uploader_asset(userAvatar(app.user)) | imagine_filter('small_avatar') }}" class="rounded-circle border" alt="{{ app.user.pseudo }}" width="30" height="30"/>
 								{% else %}
 									<img src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}" width="30" height="30" class="rounded-circle border">
 								{% endif %}
-
 								<strong class="user pb-4">{{ app.user.pseudo }}</strong>
 							</a>
 							<div class="dropdown-menu costom-shadow border-0">
-								<a class="dropdown-item">{{ app.user.pseudo }}</a>
-								<div class="dropdown-divider"></div> 
-								<a class="dropdown-item" href="{{ path('app_user_dashboard') }}">Tableau de bord</a>
-								<a class="dropdown-item" href="{{ path('app_user_missions') }}">Missions</a>
-								<a class="dropdown-item" href="{{ path('app_user_affiliers') }}">Affiliers</a>
-								<a class="dropdown-item" href="{{ path('app_user_paiements') }}">Paiements</a>
-								{% if app.user.points >= 5000 %}
-								<a class="dropdown-item" href="{{ path('app_user_demande_paiement') }}">Demander un paiement</a>
-								{% endif %}
-								<a class="dropdown-item" href="{{ path('app_user_profil') }}">Profil</a>
-								<a class="dropdown-item" href="{{ path('app_user_edit_profil') }}">Edition du profil</a>
-								<a class="dropdown-item" href="{{ path('app_user_reset_password') }}">Mot de passe</a>
-								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="{{ path('app_user_dashboard') }}"><i class="fa fa-user"></i>Profil</a>
+								<a class="dropdown-item" href="{{ path('app_user_edit_profil') }}"><i class="fa fa-pen"></i>Edition profil</a>
+								<a class="dropdown-item" href="{{ path('app_user_reset_password') }}"><i class="fa fa-lock"></i>Edition du mot de passe</a>
 								<a class="dropdown-item text-danger" href="{{ path('app_disconnect') }}"><i class="fa fa-power-off text-danger"></i>Déconnexion</a>
 							</div>
 						</li>
-
 						<li class="nav-item">
 							<span class="nav-link"><span class="point badge green-bg" id="navbarpoints">{{ app.user.points ? app.user.points : 0 }}&nbsp;<i class="fa fa-money-bill-wave"></i></span></span>
 						</li>

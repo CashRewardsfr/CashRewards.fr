@@ -195,6 +195,51 @@
 					</div>
 				</a>
 			</div>
+			<div class="col-md-12" style="margin-top: 20px;">
+				<div class="card">
+					<div class="card-header bg-transparent"><h4>Missions</h4></div>
+					<div class="card-body">
+						<h4>Votre Historique</h4>
+						<div class="table-responsive">
+							{% include('user/_userMissions.html.twig') %}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12" style="margin-top: 20px;">
+				<div class="card">
+					<div class="card-header bg-transparent"><h4>Vos affiliers</h4></div>
+					<div class="card-body">
+						<div class="row">
+							{% for affilier in affiliers %}
+							<div class="col-md-3">
+								{% include('user/_affilierBox.html.twig') %}
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="card-footer bg-transparent">
+						{{ knp_pagination_render(affiliers) }}
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12" style="margin-top: 20px;">
+				<div class="card">
+					<div class="card-header bg-transparent">
+						<h4 class="">Demandes de paiements</h4>
+					</div>
+					<div class="card-body">
+						<h4 class="float-md-left">Votre Historique des demandes de paiement {{ app.user.pseudo }}</h4>
+						<a href="{{ path('app_user_demande_paiement') }}" class="float-md-right btn btn-outline-primary btn-sm"><i class="fa fa-cart-plus"></i> Demander un paiement</a>
+						<div class="table-responsive">
+							{% include('user/_demandePaiementTable.html.twig') %}
+						</div>
+					</div>
+					<div class="card-footer bg-transparent">
+						{{ knp_pagination_render(paiements) }}
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
