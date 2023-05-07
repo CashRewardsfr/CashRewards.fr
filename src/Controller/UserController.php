@@ -86,6 +86,7 @@ class UserController extends AbstractController
             'mission' => $mission,
             'affiliers' => $affiliers,
             'paiements' => $paiements,
+            'parrainageLink' => $this->urlHelper->getAbsoluteUrl('/parrainage/parrain_id=' . $this->getUser()->getId()),
         ]);
     }
 
