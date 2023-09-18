@@ -18,6 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/users/demande-paiement')]
 class PaiementsController extends AbstractController
 {
+    /*
     #[Route('/', name: 'app_user_demande_paiement', methods: ['GET', 'POST'])]
     public function paiement(Request $request, PaiementRepository $paiementRepository, UserRepository $userRepository): Response
     {
@@ -46,7 +47,7 @@ class PaiementsController extends AbstractController
 
             /*
             * Décrémentation des points
-            */
+            *//*
             if($totalPointsReduction <= $user->getPoints()){
 
                 $user->setPoints($user->getPoints() - $totalPointsReduction);
@@ -77,7 +78,7 @@ class PaiementsController extends AbstractController
 
             /*
             * Décrémentation des points
-            */
+            *//*
             if($totalPointsReduction <= $user->getPoints()){
 
                 $user->setPoints($user->getPoints() - $totalPointsReduction);
@@ -109,7 +110,7 @@ class PaiementsController extends AbstractController
 
             /*
             * Décrémentation des points
-            */
+            *//*
             if($totalPointsReduction <= $user->getPoints()){
 
                 $user->setPoints($user->getPoints() - $totalPointsReduction);
@@ -141,7 +142,7 @@ class PaiementsController extends AbstractController
 
             /*
             * Décrémentation des points
-            */
+            *//*
             if($totalPointsReduction <= $user->getPoints()){
 
                 $user->setPoints($user->getPoints() - $totalPointsReduction);
@@ -175,4 +176,5 @@ class PaiementsController extends AbstractController
             'amazonform' => $amazonform,
         ]);
     }
+*/
 }
