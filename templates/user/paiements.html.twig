@@ -16,6 +16,7 @@
 					<div class="card-header bg-transparent">
 						<h4 class="">Demandes de paiements</h4>
 					</div>
+					{#
 					<div class="card-body">
 						<h4 class="float-md-left">Votre Historique des demandes de paiement {{ app.user.pseudo }}</h4>
 						<a href="{{ path('app_user_demande_paiement') }}" class="float-md-right btn btn-outline-primary btn-sm"><i class="fa fa-cart-plus"></i> Demander un paiement</a>
@@ -26,6 +27,7 @@
 					<div class="card-footer bg-transparent">
 						{{ knp_pagination_render(paiements) }}
 					</div>
+					#}
 				</div>
 			</div>
 		</div>
