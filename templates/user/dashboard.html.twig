@@ -231,7 +231,9 @@
 					</div>
 					<div class="card-body">
 						<h4 class="float-md-left">Votre Historique des demandes de paiement {{ app.user.pseudo }}</h4>
+						{#
 						<a href="{{ path('app_user_demande_paiement') }}" class="float-md-right btn btn-outline-primary btn-sm"><i class="fa fa-cart-plus"></i> Demander un paiement</a>
+						#}
 						<div class="table-responsive">
 							{% include('user/_demandePaiementTable.html.twig') %}
 						</div>
